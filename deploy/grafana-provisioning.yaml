@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-provisioning
+  namespace: flight-tracker
+data:
+  datasource.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: InfluxDB
+        uid: influxdb
+        type: influxdb
+        access: proxy
+        url: http://influxdb.flight-tracker:8086
+        jsonData:
+          version: Flux
+          organization: flights
+          defaultBucket: flight_prices
+        secureJsonData:
+          token: ${INFLUXDB_TOKEN}
+        isDefault: true
+  dashboards.yaml: |
+    apiVersion: 1
+    providers:
+      - name: flight-tracker
+        type: file
+        options:
+          path: /var/lib/grafana/dashboards

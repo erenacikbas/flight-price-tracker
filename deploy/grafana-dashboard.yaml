@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-flights
+  namespace: flight-tracker
+data:
+  flights.json: |
+    {
+      "title": "Flight Prices",
+      "uid": "flight-prices",
+      "schemaVersion": 39,
+      "time": { "from": "now-30d", "to": "now" },
+      "refresh": "15m",
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "Cheapest price over time (EUR)",
+          "gridPos": { "h": 10, "w": 24, "x": 0, "y": 0 },
+          "fieldConfig": { "defaults": { "unit": "currencyEUR" }, "overrides": [] },
+          "targets": [
+            {
+              "datasource": { "type": "influxdb", "uid": "influxdb" },
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"route_id\"])\n  |> aggregateWindow(every: 15m, fn: min, createEmpty: false)"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Current cheapest (EUR)",
+          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 10 },
+          "fieldConfig": { "defaults": { "unit": "currencyEUR" }, "overrides": [] },
+          "targets": [
+            {
+              "datasource": { "type": "influxdb", "uid": "influxdb" },
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"route_id\"])\n  |> last()"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Days to departure",
+          "gridPos": { "h": 6, "w": 8, "x": 8, "y": 10 },
+          "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+          "targets": [
+            {
+              "datasource": { "type": "influxdb", "uid": "influxdb" },
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"days_to_departure\")\n  |> group(columns: [\"route_id\"])\n  |> last()"
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Latest snapshot",
+          "gridPos": { "h": 6, "w": 8, "x": 16, "y": 10 },
+          "targets": [
+            {
+              "datasource": { "type": "influxdb", "uid": "influxdb" },
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and (r._field == \"price\" or r._field == \"cheapest_airline\"))\n  |> last()\n  |> pivot(rowKey: [\"route_id\"], columnKey: [\"_field\"], valueColumn: \"_value\")"
+            }
+          ]
+        }
+      ]
+    }
