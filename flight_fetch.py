@@ -30,7 +30,13 @@ class CookieFetch(FetchIntegration):
         client = Client(impersonate="chrome_145", impersonate_os="macos",
                         referer=True, cookie_store=True)
         params = q.params() if hasattr(q, "params") else {"q": q}
-        return client.get(URL, params=params, headers={"cookie": self._cookie}).text
+        html = client.get(URL, params=params, headers={"cookie": self._cookie}).text
+        low = html.lower()
+        if "consentui" in low or "before you continue" in low:
+            raise RuntimeError(
+                "Google returned a consent/interstitial page, not flight results "
+                "(the SOCS consent cookie likely needs rotating)")
+        return html
 
 
 def _build_query(route: dict, cfg: dict):

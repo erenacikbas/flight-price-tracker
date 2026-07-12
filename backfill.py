@@ -5,16 +5,11 @@ import os
 import sys
 from datetime import datetime
 
-from records import Record
+from records import Record, _days_to_departure
 from influx_writer import influx_config_from_env, write_records
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_CSV = os.path.join(HERE, "data", "prices.csv")
-
-
-def _dtd(depart_date: str, ts: datetime) -> int:
-    from datetime import date
-    return (date.fromisoformat(depart_date) - ts.date()).days
 
 
 def csv_rows_to_records(path=DEFAULT_CSV) -> list[Record]:
@@ -38,7 +33,7 @@ def csv_rows_to_records(path=DEFAULT_CSV) -> list[Record]:
                     "price": int(row["cheapest_price"]),
                     "num_options": int(row.get("num_options") or 0),
                     "cheapest_airline": row.get("cheapest_airline", ""),
-                    "days_to_departure": _dtd(row["depart_date"], ts),
+                    "days_to_departure": _days_to_departure(row["depart_date"], ts),
                 },
                 time=ts,
             ))

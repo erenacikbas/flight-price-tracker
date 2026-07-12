@@ -27,3 +27,10 @@ def test_collect_no_hard_failure_when_zero_options():
     records, hard_failures = logger.collect(CFG, fetch=fetch, now=NOW)
     assert records == []
     assert hard_failures == 0
+
+def test_collect_counts_hard_failure_on_fetch_exception():
+    def boom(route, cfg):
+        raise RuntimeError("boom")
+    records, hard_failures = logger.collect(CFG, fetch=boom, now=NOW)
+    assert records == []
+    assert hard_failures == 1

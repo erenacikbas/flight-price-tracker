@@ -52,3 +52,18 @@ def test_cookiefetch_sets_socs_header(monkeypatch):
         def params(self): return {"tfs": "x"}
     CookieFetch(DEFAULT_SOCS_COOKIE).fetch_html(Q())
     assert "SOCS=" in seen["headers"]["cookie"]
+
+def test_cookiefetch_raises_on_consent_page(monkeypatch):
+    import flight_fetch
+    from flight_fetch import CookieFetch, DEFAULT_SOCS_COOKIE
+    class ConsentClient:
+        def __init__(self, **kw): pass
+        def get(self, url, params=None, headers=None):
+            class R: text = "<html><body>Before you continue to Google ... ConsentUi</body></html>"
+            return R()
+    monkeypatch.setattr(flight_fetch, "Client", ConsentClient)
+    class Q:
+        def params(self): return {"tfs": "x"}
+    import pytest
+    with pytest.raises(RuntimeError):
+        CookieFetch(DEFAULT_SOCS_COOKIE).fetch_html(Q())

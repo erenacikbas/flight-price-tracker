@@ -17,6 +17,7 @@ def test_parses_csv_into_records(tmp_path):
     assert r.fields["num_options"] == 34
     assert r.fields["cheapest_airline"] == "Qatar Airways"
     assert r.time.year == 2026 and r.time.month == 7 and r.time.day == 8
+    assert r.fields["days_to_departure"] == 110
 
 def test_skips_rows_without_price(tmp_path):
     csv = tmp_path / "prices.csv"
