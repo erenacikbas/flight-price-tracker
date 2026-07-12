@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana-data
-  namespace: flight-tracker
+  namespace: grafana
 spec:
   accessModes: ["ReadWriteOnce"]
   storageClassName: local-path
@@ -12,7 +12,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
-  namespace: flight-tracker
+  namespace: grafana
 spec:
   replicas: 1
   strategy: { type: Recreate }
@@ -28,11 +28,11 @@ spec:
           ports: [{ containerPort: 3000 }]
           env:
             - name: GF_SECURITY_ADMIN_USER
-              valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: grafana-admin-user } }
+              valueFrom: { secretKeyRef: { name: grafana-secrets, key: grafana-admin-user } }
             - name: GF_SECURITY_ADMIN_PASSWORD
-              valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: grafana-admin-password } }
+              valueFrom: { secretKeyRef: { name: grafana-secrets, key: grafana-admin-password } }
             - name: INFLUXDB_TOKEN
-              valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: influxdb-token } }
+              valueFrom: { secretKeyRef: { name: grafana-secrets, key: influxdb-token } }
             - { name: GF_SERVER_ROOT_URL, value: "https://grafana.standardhomelab.com" }
           volumeMounts:
             - { name: data, mountPath: /var/lib/grafana }
@@ -59,7 +59,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: grafana
-  namespace: flight-tracker
+  namespace: grafana
 spec:
   selector: { app: grafana }
   ports: [{ port: 3000, targetPort: 3000 }]
