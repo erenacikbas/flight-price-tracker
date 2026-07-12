@@ -6,7 +6,9 @@ metadata:
 data:
   routes.json: |
     {
-      "currency": "EUR",
+      "currency": "TRY",
+      "gl": "TR",
+      "hl": "en",
       "seat": "economy",
       "adults": 1,
       "google_socs_cookie": "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg",

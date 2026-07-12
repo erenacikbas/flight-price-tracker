@@ -1,80 +1,101 @@
-# flight_fetch.py
+"""Fetch cheapest fare per airline for a route, in TRY.
+
+Uses fast-flights 2.2 (returns the full itinerary list, not just "best flights").
+Datacenter IPs need two things injected: the SOCS consent cookie (bypass Google's
+EU consent wall) and curr=TRY&gl=TR (force Turkish Lira, since the egress IP would
+otherwise geolocate to EUR). We install a patched `fast_flights.core.fetch` that adds
+both, then group the results by airline and keep the cheapest price per airline.
+"""
 import os
-import time
+import re
 import sys
-import fast_flights as ff
-from fast_flights.integrations.base import FetchIntegration
-from primp import Client
-from records import CheapestResult
+import time
 
-MAX_ATTEMPTS = 3
+import fast_flights.core as _core
+from fast_flights.primp import Client
+from fast_flights import FlightData, Passengers, get_flights as _ff_get_flights
+
 URL = "https://www.google.com/travel/flights"
-
-# Known-good SOCS consent cookie (see Task 1 outcome). Datacenter IPs get Google's
-# EU consent wall without it. Rotatable via cfg/env if Google ever invalidates it.
+# Known-good SOCS consent cookie (rotatable via cfg/env). See the deployment memory.
 DEFAULT_SOCS_COOKIE = "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg"
+MAX_ATTEMPTS = 3
+_PRICE_RE = re.compile(r"[\d.,]+")
 
 
 def resolve_cookie(cfg: dict) -> str:
     return cfg.get("google_socs_cookie") or os.environ.get("GOOGLE_SOCS_COOKIE") or DEFAULT_SOCS_COOKIE
 
 
-class CookieFetch(FetchIntegration):
-    """Fetch the flights page with the SOCS consent cookie set, so Google serves the
-    real results page instead of the EU consent interstitial."""
+def install_fetch(cfg: dict) -> None:
+    """Patch fast_flights.core.fetch to inject the consent cookie + forced currency."""
+    cookie = resolve_cookie(cfg)
+    curr = cfg.get("currency", "TRY")
+    gl = cfg.get("gl", "TR")
+    hl = cfg.get("hl", "en")
 
-    def __init__(self, cookie: str):
-        self._cookie = cookie
+    def _fetch(params: dict):
+        p = dict(params)
+        p["curr"], p["hl"], p["gl"] = curr, hl, gl
+        return Client(impersonate="chrome_126", verify=True).get(
+            URL, params=p, headers={"cookie": cookie}
+        )
 
-    def fetch_html(self, q, /) -> str:
-        client = Client(impersonate="chrome_145", impersonate_os="macos",
-                        referer=True, cookie_store=True)
-        params = q.params() if hasattr(q, "params") else {"q": q}
-        html = client.get(URL, params=params, headers={"cookie": self._cookie}).text
-        low = html.lower()
-        if "consentui" in low or "before you continue" in low:
-            raise RuntimeError(
-                "Google returned a consent/interstitial page, not flight results "
-                "(the SOCS consent cookie likely needs rotating)")
-        return html
+    _core.fetch = _fetch
 
 
-def _build_query(route: dict, cfg: dict):
-    legs = [ff.FlightQuery(date=route["depart_date"],
-                           from_airport=route["origin"], to_airport=route["destination"])]
-    trip = route.get("trip", "one-way")
-    if trip == "round-trip":
+def parse_price(raw) -> int | None:
+    """'TRY 34,002' / 'TRY\\xa034.002' -> 34002 ; 'Price unavailable' -> None."""
+    if raw is None:
+        return None
+    s = str(raw).replace("\xa0", " ")
+    if "unavailable" in s.lower():
+        return None
+    m = _PRICE_RE.search(s)
+    if not m:
+        return None
+    digits = m.group(0).replace(".", "").replace(",", "")
+    return int(digits) if digits.isdigit() else None
+
+
+def cheapest_per_airline(result) -> dict:
+    """From a fast-flights Result, return {airline_name: cheapest_price_int}."""
+    out = {}
+    for f in getattr(result, "flights", []):
+        price = parse_price(getattr(f, "price", None))
+        if price is None or price <= 0:
+            continue
+        name = (getattr(f, "name", None) or "").strip() or "Unknown"
+        if name not in out or price < out[name]:
+            out[name] = price
+    return out
+
+
+def _flight_data(route: dict):
+    legs = [FlightData(date=route["depart_date"],
+                       from_airport=route["origin"], to_airport=route["destination"])]
+    if route.get("trip", "one-way") == "round-trip":
         if not route.get("return_date"):
             raise ValueError(f'route {route.get("id")} is round-trip but has no return_date')
-        legs.append(ff.FlightQuery(date=route["return_date"],
-                                   from_airport=route["destination"], to_airport=route["origin"]))
-    return ff.create_query(
-        flights=legs, trip=trip, seat=cfg.get("seat", "economy"),
-        passengers=ff.Passengers(adults=cfg.get("adults", 1)),
-        currency=cfg.get("currency", "EUR"),
-    )
+        legs.append(FlightData(date=route["return_date"],
+                               from_airport=route["destination"], to_airport=route["origin"]))
+    return legs
 
 
-def select_cheapest(result) -> CheapestResult:
-    items = list(result)
-    valid = [f for f in items if isinstance(f.price, int) and f.price > 0]
-    level = getattr(result, "current_price", "") or ""
-    if not valid:
-        return CheapestResult(price=None, airline="", num_options=len(items), price_level=level)
-    best = min(valid, key=lambda f: f.price)
-    airline = ", ".join(best.airlines) if getattr(best, "airlines", None) else ""
-    return CheapestResult(price=best.price, airline=airline, num_options=len(items), price_level=level)
-
-
-def fetch_cheapest(route: dict, cfg: dict, get_flights=None) -> CheapestResult:
-    get_flights = get_flights or ff.get_flights
-    q = _build_query(route, cfg)
-    integration = CookieFetch(resolve_cookie(cfg))
+def airline_prices(route: dict, cfg: dict, get_flights=None) -> dict:
+    """Fetch and return {airline: cheapest_price} (in cfg currency, default TRY)."""
+    get_flights = get_flights or _ff_get_flights
+    install_fetch(cfg)
+    legs = _flight_data(route)
+    trip = route.get("trip", "one-way")
     last_err = None
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
-            return select_cheapest(get_flights(q, integration=integration))
-        except Exception as e:  # transient scrape/network failure
+            result = get_flights(
+                flight_data=legs, trip=trip, seat=cfg.get("seat", "economy"),
+                passengers=Passengers(adults=cfg.get("adults", 1)),
+            )
+            return cheapest_per_airline(result)
+        except Exception as e:  # transient scrape / consent page raises here
             last_err = e
             print(f"  attempt {attempt}/{MAX_ATTEMPTS} failed: {e}", file=sys.stderr)
             time.sleep(4 * attempt)

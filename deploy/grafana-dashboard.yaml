@@ -11,51 +11,111 @@ data:
       "schemaVersion": 39,
       "time": { "from": "now-30d", "to": "now" },
       "refresh": "15m",
+      "templating": {
+        "list": [
+          {
+            "name": "try_per_eur",
+            "type": "textbox",
+            "label": "TRY per EUR",
+            "query": "48",
+            "current": { "text": "48", "value": "48" }
+          }
+        ]
+      },
       "panels": [
         {
           "type": "timeseries",
-          "title": "Cheapest price over time (EUR)",
-          "gridPos": { "h": 10, "w": 24, "x": 0, "y": 0 },
-          "fieldConfig": { "defaults": { "unit": "currencyEUR" }, "overrides": [] },
+          "title": "Price by airline over time (TRY)",
+          "gridPos": { "h": 11, "w": 24, "x": 0, "y": 0 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "currencyTRY",
+              "custom": { "drawStyle": "line", "showPoints": "auto", "spanNulls": true }
+            },
+            "overrides": [
+              { "matcher": { "id": "byFrameRefID", "options": "A" },
+                "properties": [ { "id": "displayName", "value": "${__field.labels.airline}" } ] }
+            ]
+          },
+          "options": { "legend": { "displayMode": "table", "placement": "right", "calcs": ["last", "min", "max"] } },
           "targets": [
             {
+              "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"route_id\"])\n  |> aggregateWindow(every: 15m, fn: min, createEmpty: false)"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"airline\"])\n  |> aggregateWindow(every: 15m, fn: min, createEmpty: false)"
             }
           ]
         },
         {
           "type": "stat",
-          "title": "Current cheapest (EUR)",
-          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 10 },
-          "fieldConfig": { "defaults": { "unit": "currencyEUR" }, "overrides": [] },
+          "title": "Cheapest now (TRY)",
+          "gridPos": { "h": 6, "w": 6, "x": 0, "y": 11 },
+          "fieldConfig": { "defaults": { "unit": "currencyTRY" } },
           "targets": [
             {
+              "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"route_id\"])\n  |> last()"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"airline\"]) |> last()\n  |> group() |> min()"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Cheapest now (EUR @ ${try_per_eur} TRY/EUR)",
+          "gridPos": { "h": 6, "w": 6, "x": 6, "y": 11 },
+          "fieldConfig": { "defaults": { "unit": "currencyEUR", "decimals": 0 } },
+          "targets": [
+            {
+              "refId": "A",
+              "datasource": { "type": "influxdb", "uid": "influxdb" },
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"airline\"]) |> last()\n  |> group() |> min()\n  |> map(fn: (r) => ({ r with _value: r._value / float(v: ${try_per_eur}) }))"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Cheapest airline now",
+          "gridPos": { "h": 6, "w": 6, "x": 12, "y": 11 },
+          "fieldConfig": { "defaults": { "unit": "currencyTRY" } },
+          "options": { "reduceOptions": { "calcs": ["last"], "fields": "/.*/" }, "textMode": "value_and_name" },
+          "targets": [
+            {
+              "refId": "A",
+              "datasource": { "type": "influxdb", "uid": "influxdb" },
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"airline\"]) |> last()\n  |> group() |> min()\n  |> map(fn: (r) => ({ r with airline: r.airline }))"
             }
           ]
         },
         {
           "type": "stat",
           "title": "Days to departure",
-          "gridPos": { "h": 6, "w": 8, "x": 8, "y": 10 },
-          "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+          "gridPos": { "h": 6, "w": 6, "x": 18, "y": 11 },
+          "fieldConfig": { "defaults": { "unit": "short" } },
           "targets": [
             {
+              "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"days_to_departure\")\n  |> group(columns: [\"route_id\"])\n  |> last()"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"days_to_departure\")\n  |> group() |> last()"
             }
           ]
         },
         {
           "type": "table",
-          "title": "Latest snapshot",
-          "gridPos": { "h": 6, "w": 8, "x": 16, "y": 10 },
+          "title": "Current price by airline (cheapest first)",
+          "gridPos": { "h": 10, "w": 24, "x": 0, "y": 17 },
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": [
+              { "matcher": { "id": "byName", "options": "TRY" }, "properties": [ { "id": "unit", "value": "currencyTRY" } ] },
+              { "matcher": { "id": "byName", "options": "EUR" }, "properties": [ { "id": "unit", "value": "currencyEUR" }, { "id": "decimals", "value": 0 } ] }
+            ]
+          },
           "targets": [
             {
+              "refId": "A",
+              "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and (r._field == \"price\" or r._field == \"cheapest_airline\"))\n  |> last()\n  |> pivot(rowKey: [\"route_id\"], columnKey: [\"_field\"], valueColumn: \"_value\")"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"airline\"]) |> last()\n  |> group()\n  |> map(fn: (r) => ({ airline: r.airline, TRY: r._value, EUR: r._value / float(v: ${try_per_eur}) }))\n  |> sort(columns: [\"TRY\"])"
             }
           ]
         }
