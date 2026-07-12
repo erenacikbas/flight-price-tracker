@@ -18,7 +18,10 @@ from fast_flights import FlightData, Passengers, get_flights as _ff_get_flights
 URL = "https://www.google.com/travel/flights"
 # Known-good SOCS consent cookie (rotatable via cfg/env). See the deployment memory.
 DEFAULT_SOCS_COOKIE = "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg"
-MAX_ATTEMPTS = 3
+# Google intermittently serves a JS-only "Loading results" shell (~50% of the time)
+# with no flight data in the HTML, which raises "No flights found". Retry through it.
+DEFAULT_MAX_ATTEMPTS = 8
+DEFAULT_RETRY_DELAY = 6
 _PRICE_RE = re.compile(r"[\d.,]+")
 
 
@@ -87,16 +90,22 @@ def airline_prices(route: dict, cfg: dict, get_flights=None) -> dict:
     install_fetch(cfg)
     legs = _flight_data(route)
     trip = route.get("trip", "one-way")
+    max_attempts = int(cfg.get("max_attempts", DEFAULT_MAX_ATTEMPTS))
+    delay = int(cfg.get("retry_delay", DEFAULT_RETRY_DELAY))
     last_err = None
-    for attempt in range(1, MAX_ATTEMPTS + 1):
+    for attempt in range(1, max_attempts + 1):
         try:
             result = get_flights(
                 flight_data=legs, trip=trip, seat=cfg.get("seat", "economy"),
                 passengers=Passengers(adults=cfg.get("adults", 1)),
             )
-            return cheapest_per_airline(result)
-        except Exception as e:  # transient scrape / consent page raises here
+            prices = cheapest_per_airline(result)
+            if prices:
+                return prices
+            last_err = RuntimeError("no priced airlines in result")
+        except Exception as e:  # transient "Loading results" shell raises "No flights found"
             last_err = e
-            print(f"  attempt {attempt}/{MAX_ATTEMPTS} failed: {e}", file=sys.stderr)
-            time.sleep(4 * attempt)
+        print(f"  attempt {attempt}/{max_attempts}: {str(last_err)[:60]}", file=sys.stderr)
+        if attempt < max_attempts:
+            time.sleep(delay)
     raise last_err
