@@ -1,0 +1,10 @@
+ffvenv/
+v22/
+.venv/
+__pycache__/
+tests/
+docs/
+data/
+.git/
+.superpowers/
+*.md
