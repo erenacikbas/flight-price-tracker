@@ -26,7 +26,7 @@ everywhere it appears.
 - Grafana exposure: **Cloudflare Tunnel + Cloudflare Access** at `GRAFANA_HOST`.
 - Logger image: **public** GHCR image (no imagePullSecret).
 - Fetch library: **`fast-flights==3.0.2`** pinned + parser guard patch. Currency **EUR** enforced in the query.
-- Fetch mode: default HTTP (`primp`), **contingent on Task 1 cluster-IP verification**; switch to `fetch_mode="fallback"` (Playwright/chromium) only if that gate fails.
+- Fetch mode: default HTTP (`primp`) with the **`SOCS` consent cookie injected** (Task 1 confirmed datacenter IPs hit Google's EU consent wall without it). No Playwright/chromium/proxy needed. Cookie is rotatable via config/env.
 - Storage class: only `local-path` (default) is available.
 - Cluster namespace: `flight-tracker`.
 - Measurement `flight_price`; tags `route_id, origin, destination, trip, currency, price_level`; fields `price` (int), `num_options` (int), `cheapest_airline` (string), `days_to_departure` (int); timestamp = fetch time.
@@ -143,17 +143,29 @@ RUN
 
 Expected (GO): `NUM_PRICED` ≥ 1 and `CHEAPEST` is a plausible EUR integer (roughly 400–800 for IST→DPS, matching `data/prices.csv`). Currency is implicitly EUR because `currency="EUR"` was set and prices land in the CSV's known EUR range.
 
-- [ ] **Step 3: Record the decision**
+- [x] **Step 3: Record the decision — DONE 2026-07-12**
 
-- If GO: note it in the plan/PR description; proceed to Task 2 with default fetch mode.
-- If prices look like a different currency's magnitude (e.g. ~20000 → TRY), or `NUM_PRICED` is 0 with a bot/consent page, or the pod hangs/gets a challenge: STOP and report. The contingency is Task 6's Playwright variant + optional `HTTP_PROXY`. Do not build the stack until this is green.
+**Outcome: GO, with a required consent-cookie contingency.** The bare fetch from the
+Hetzner egress IP (`188.245.186.93`) returned Google's **EU cookie-consent interstitial**
+("ConsentUi" / "before you continue"), not the results page — no captcha, no hard bot-block.
+Empirically, setting the **`SOCS` consent cookie** (not `CONSENT=YES+`, which does not work)
+makes Google serve the full 2.1 MB results page. Full end-to-end from the cluster
+(SOCS cookie via a custom `FetchIntegration` + guarded parse) yielded **5 priced itineraries,
+cheapest 597 EUR on Qatar Airways** — clean EUR, no chromium, no proxy.
 
-- [ ] **Step 4: Commit (decision note only)**
-
-```bash
-git add docs/superpowers/plans/2026-07-12-flight-tracker-hetzner.md
-git commit -m "chore: record cluster-IP fetch verification result"
-```
+Consequences folded into later tasks:
+- **Task 3**: `flight_fetch.py` must fetch through a custom `CookieFetch(FetchIntegration)`
+  that injects the `SOCS` cookie, passed to `get_flights(q, integration=...)`. The cookie
+  value is configurable via env `GOOGLE_SOCS_COOKIE` (baked default) so it can be rotated
+  without an image rebuild if Google ever invalidates it.
+- **Task 10**: the `google_socs_cookie` field lives in the routes ConfigMap the CronJob
+  mounts (rotatable without rebuild); env `GOOGLE_SOCS_COOKIE` is an alternate override.
+- The small `python:3.11-slim` image stands (Task 6) — the Playwright/proxy contingency is
+  NOT needed.
+- Known-good default value:
+  `SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg`
+  Regenerate if it ever stops working by accepting Google's consent once in a browser and
+  copying the `SOCS` cookie.
 
 ---
 
@@ -271,9 +283,9 @@ git commit -m "feat: pure route->record mapping for InfluxDB"
 
 ---
 
-### Task 3: Flight fetch wrapper + parser patch (TDD for selection logic)
+### Task 3: Flight fetch wrapper (consent cookie) + parser patch (TDD for selection logic)
 
-Isolate the `fast-flights` call behind `fetch_cheapest`, with the cheapest-selection logic unit-tested via a fake result. Also ship the reusable parser-guard patch.
+Isolate the `fast-flights` call behind `fetch_cheapest`, with the cheapest-selection logic unit-tested via a fake result. Fetch through a custom `CookieFetch(FetchIntegration)` that injects the `SOCS` consent cookie (required from datacenter IPs — see Task 1 outcome). Also ship the reusable parser-guard patch.
 
 **Files:**
 - Create: `flight_fetch.py`, `scripts/patch_fast_flights.py`
@@ -281,7 +293,11 @@ Isolate the `fast-flights` call behind `fetch_cheapest`, with the cheapest-selec
 - Test: `tests/test_flight_fetch.py`
 
 **Interfaces:**
-- Produces: `fetch_cheapest(route: dict, cfg: dict, get_flights=<injected>) -> CheapestResult`. The `get_flights` param is injectable for testing; defaults to the real `fast_flights.get_flights` with a built query. `select_cheapest(result) -> CheapestResult` is the pure selector.
+- Produces:
+  - `DEFAULT_SOCS_COOKIE: str` (baked known-good value).
+  - `CookieFetch(FetchIntegration)` — injects the `SOCS` cookie; `fetch_html(q) -> str`.
+  - `select_cheapest(result) -> CheapestResult` (pure selector).
+  - `fetch_cheapest(route: dict, cfg: dict, get_flights=<injected>) -> CheapestResult`. `get_flights` is injectable for testing (signature `get_flights(query, integration=...)`); defaults to `fast_flights.get_flights`. Reads the cookie from `cfg["google_socs_cookie"]` → env `GOOGLE_SOCS_COOKIE` → `DEFAULT_SOCS_COOKIE`.
 - Consumes: `records.CheapestResult`.
 
 - [ ] **Step 1: Pin dependencies**
@@ -363,9 +379,31 @@ def test_fetch_cheapest_uses_injected_get_flights():
     route = {"id": "IST-DPS", "origin": "IST", "destination": "DPS",
              "depart_date": "2026-10-26", "trip": "one-way"}
     cfg = {"currency": "EUR", "seat": "economy", "adults": 1}
-    c = fetch_cheapest(route, cfg, get_flights=lambda q: res)
+    captured = {}
+    def fake_get_flights(q, integration=None):
+        captured["integration"] = integration
+        return res
+    c = fetch_cheapest(route, cfg, get_flights=fake_get_flights)
     assert c.price == 500
     assert c.airline == "Emirates"
+    # a cookie-injecting integration must be passed through
+    assert captured["integration"] is not None
+
+def test_cookiefetch_sets_socs_header(monkeypatch):
+    from flight_fetch import CookieFetch, DEFAULT_SOCS_COOKIE
+    seen = {}
+    class FakeClient:
+        def __init__(self, **kw): pass
+        def get(self, url, params=None, headers=None):
+            seen["headers"] = headers
+            class R: text = "<html></html>"
+            return R()
+    import flight_fetch
+    monkeypatch.setattr(flight_fetch, "Client", FakeClient)
+    class Q:
+        def params(self): return {"tfs": "x"}
+    CookieFetch(DEFAULT_SOCS_COOKIE).fetch_html(Q())
+    assert "SOCS=" in seen["headers"]["cookie"]
 ```
 
 - [ ] **Step 4: Run test to verify it fails**
@@ -377,12 +415,38 @@ Expected: FAIL with `ModuleNotFoundError: No module named 'flight_fetch'`.
 
 ```python
 # flight_fetch.py
+import os
 import time
 import sys
 import fast_flights as ff
+from fast_flights.integrations.base import FetchIntegration
+from primp import Client
 from records import CheapestResult
 
 MAX_ATTEMPTS = 3
+URL = "https://www.google.com/travel/flights"
+
+# Known-good SOCS consent cookie (see Task 1 outcome). Datacenter IPs get Google's
+# EU consent wall without it. Rotatable via cfg/env if Google ever invalidates it.
+DEFAULT_SOCS_COOKIE = "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg"
+
+
+def resolve_cookie(cfg: dict) -> str:
+    return cfg.get("google_socs_cookie") or os.environ.get("GOOGLE_SOCS_COOKIE") or DEFAULT_SOCS_COOKIE
+
+
+class CookieFetch(FetchIntegration):
+    """Fetch the flights page with the SOCS consent cookie set, so Google serves the
+    real results page instead of the EU consent interstitial."""
+
+    def __init__(self, cookie: str):
+        self._cookie = cookie
+
+    def fetch_html(self, q, /) -> str:
+        client = Client(impersonate="chrome_145", impersonate_os="macos",
+                        referer=True, cookie_store=True)
+        params = q.params() if hasattr(q, "params") else {"q": q}
+        return client.get(URL, params=params, headers={"cookie": self._cookie}).text
 
 
 def _build_query(route: dict, cfg: dict):
@@ -415,16 +479,21 @@ def select_cheapest(result) -> CheapestResult:
 def fetch_cheapest(route: dict, cfg: dict, get_flights=None) -> CheapestResult:
     get_flights = get_flights or ff.get_flights
     q = _build_query(route, cfg)
+    integration = CookieFetch(resolve_cookie(cfg))
     last_err = None
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
-            return select_cheapest(get_flights(q))
+            return select_cheapest(get_flights(q, integration=integration))
         except Exception as e:  # transient scrape/network failure
             last_err = e
             print(f"  attempt {attempt}/{MAX_ATTEMPTS} failed: {e}", file=sys.stderr)
             time.sleep(4 * attempt)
     raise last_err
 ```
+
+> `primp` is a transitive dependency of `fast-flights`; importing `from primp import Client`
+> works without adding it to `requirements.txt`, but pin it explicitly there if a clean
+> lockfile is desired.
 
 - [ ] **Step 6: Run tests to verify they pass**
 
@@ -1151,12 +1220,17 @@ data:
       "currency": "EUR",
       "seat": "economy",
       "adults": 1,
+      "google_socs_cookie": "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg",
       "routes": [
         { "id": "IST-DPS", "origin": "IST", "destination": "DPS",
           "depart_date": "2026-10-26", "trip": "one-way" }
       ]
     }
 ```
+
+> `google_socs_cookie` lets you rotate the consent cookie by editing this ConfigMap (no
+> image rebuild). If omitted, the logger falls back to env `GOOGLE_SOCS_COOKIE`, then the
+> baked `DEFAULT_SOCS_COOKIE`.
 
 - [ ] **Step 2: CronJob**
 
