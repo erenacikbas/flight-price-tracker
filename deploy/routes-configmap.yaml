@@ -6,16 +6,10 @@ metadata:
 data:
   routes.json: |
     {
-      "currency": "TRY",
-      "gl": "TR",
-      "hl": "en",
-      "seat": "economy",
+      "cabin": "economy",
       "adults": 1,
-      "max_attempts": 5,
-      "retry_delay": 10,
-      "google_socs_cookie": "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg",
       "routes": [
-        { "id": "IST-DPS", "origin": "IST", "destination": "DPS",
-          "depart_date": "2026-10-26", "trip": "one-way" }
+        { "id": "IST-DPS", "origin": "IST", "destination": "DPS", "trip": "one-way",
+          "date_range": { "start": "2026-10-24", "end": "2026-11-01" } }
       ]
     }
