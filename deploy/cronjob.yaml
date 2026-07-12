@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: flight-logger
+  namespace: flight-tracker
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: logger
+              image: ghcr.io/erenacikbas/flight-tracker-logger:latest
+              env:
+                - { name: INFLUXDB_URL, value: "http://influxdb.flight-tracker:8086" }
+                - { name: INFLUXDB_ORG, value: flights }
+                - { name: INFLUXDB_BUCKET, value: flight_prices }
+                - { name: ROUTES_PATH, value: /config/routes.json }
+                - name: INFLUXDB_TOKEN
+                  valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: influxdb-token } }
+              volumeMounts:
+                - { name: routes, mountPath: /config }
+              resources:
+                requests: { cpu: 50m, memory: 128Mi }
+                limits: { cpu: 500m, memory: 512Mi }
+          volumes:
+            - name: routes
+              configMap: { name: flight-tracker-routes }

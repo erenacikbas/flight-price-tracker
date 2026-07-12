@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flight-tracker-routes
+  namespace: flight-tracker
+data:
+  routes.json: |
+    {
+      "currency": "EUR",
+      "seat": "economy",
+      "adults": 1,
+      "google_socs_cookie": "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg",
+      "routes": [
+        { "id": "IST-DPS", "origin": "IST", "destination": "DPS",
+          "depart_date": "2026-10-26", "trip": "one-way" }
+      ]
+    }
