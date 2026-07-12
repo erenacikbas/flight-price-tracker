@@ -13,5 +13,7 @@
       "depart_date": "2026-10-26",
       "trip": "one-way"
     }
-  ]
+  ],
+  "max_attempts": 5,
+  "retry_delay": 10
 }

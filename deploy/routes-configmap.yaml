@@ -11,6 +11,8 @@ data:
       "hl": "en",
       "seat": "economy",
       "adults": 1,
+      "max_attempts": 5,
+      "retry_delay": 10,
       "google_socs_cookie": "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg",
       "routes": [
         { "id": "IST-DPS", "origin": "IST", "destination": "DPS",
