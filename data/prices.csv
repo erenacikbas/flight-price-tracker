@@ -1,0 +1,12 @@
+timestamp_utc,route_id,origin,destination,depart_date,return_date,trip,cheapest_price,currency,cheapest_airline,num_options
+2026-07-08T06:00:04Z,IST-DPS,IST,DPS,2026-10-26,,one-way,512,EUR,Qatar Airways,34
+2026-07-08T18:00:05Z,IST-DPS,IST,DPS,2026-10-26,,one-way,508,EUR,Qatar Airways,33
+2026-07-09T06:00:04Z,IST-DPS,IST,DPS,2026-10-26,,one-way,499,EUR,Emirates,35
+2026-07-09T18:00:05Z,IST-DPS,IST,DPS,2026-10-26,,one-way,521,EUR,Qatar Airways,32
+2026-07-10T06:00:04Z,IST-DPS,IST,DPS,2026-10-26,,one-way,486,EUR,Etihad Airways,36
+2026-07-10T18:00:05Z,IST-DPS,IST,DPS,2026-10-26,,one-way,486,EUR,Etihad Airways,36
+2026-07-11T06:00:04Z,IST-DPS,IST,DPS,2026-10-26,,one-way,472,EUR,Etihad Airways,37
+2026-07-11T18:00:05Z,IST-DPS,IST,DPS,2026-10-26,,one-way,468,EUR,Qatar Airways,35
+2026-07-12T06:00:04Z,IST-DPS,IST,DPS,2026-10-26,,one-way,463,EUR,Qatar Airways,36
+2026-07-12T12:00:05Z,IST-DPS,IST,DPS,2026-10-26,,one-way,459,EUR,Qatar Airways,36
+2026-07-12T18:00:05Z,IST-DPS,IST,DPS,2026-10-26,,one-way,461,EUR,Emirates,35

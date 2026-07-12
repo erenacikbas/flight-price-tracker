@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+ffvenv/
+v22/
+
+# Secrets (never commit decrypted secrets; SOPS-encrypted files are fine)
+*.env
+secrets.dec.*
+age-key.txt
+
+# OS
+.DS_Store

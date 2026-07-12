@@ -1,0 +1,14 @@
+{
+  "currency": "EUR",
+  "seat": "economy",
+  "adults": 1,
+  "routes": [
+    {
+      "id": "IST-DPS",
+      "origin": "IST",
+      "destination": "DPS",
+      "depart_date": "2026-10-26",
+      "trip": "one-way"
+    }
+  ]
+}
