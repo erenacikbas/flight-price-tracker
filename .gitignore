@@ -14,3 +14,6 @@ age-key.txt
 
 # OS
 .DS_Store
+
+# Subagent-driven-development scratch (ledger, briefs, review diffs)
+.superpowers/
