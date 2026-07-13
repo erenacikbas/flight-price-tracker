@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, date
+from urllib.parse import quote_plus
 
 
 @dataclass
@@ -14,18 +15,15 @@ def _days_to_departure(depart_date: str, now: datetime) -> int:
     return (date.fromisoformat(depart_date) - now.date()).days
 
 
-def booking_url(origin: str, destination: str, depart_date: str, marker: str, adults: int = 1) -> str:
-    """Aviasales search deep-link with the affiliate marker (one-way).
-    URL pattern: /search/{ORIGIN}{DDMM}{DEST}{PAX}?marker=..."""
-    d = date.fromisoformat(depart_date)
-    ddmm = f"{d.day:02d}{d.month:02d}"
-    return f"https://www.aviasales.com/search/{origin}{ddmm}{destination}{adults}?marker={marker}"
+def booking_url(origin: str, destination: str, depart_date: str) -> str:
+    """Google Flights deep-link for the exact route + date (where the tracked fares live)."""
+    q = quote_plus(f"flights from {origin} to {destination} on {depart_date}")
+    return f"https://www.google.com/travel/flights?q={q}"
 
 
-def date_to_record(route: dict, cfg: dict, depart_date: str, info: dict, now: datetime) -> Record:
-    """One point per (route, depart_date): the cheapest fare that day."""
+def airline_date_record(route: dict, cfg: dict, depart_date: str, airline: str, info: dict, now: datetime) -> Record:
+    """One point per (route, depart_date, airline): that airline's cheapest fare that day."""
     origin, destination = route["origin"], route["destination"]
-    marker = str(cfg.get("marker", ""))
     return Record(
         measurement="flight_price",
         tags={
@@ -33,11 +31,9 @@ def date_to_record(route: dict, cfg: dict, depart_date: str, info: dict, now: da
             "origin": origin,
             "destination": destination,
             "depart_date": depart_date,
-            "airline": info.get("airline", "Unknown"),
+            "airline": airline,
             "currency": cfg.get("currency", "TRY").upper(),
-            # booking_url is a stable dimension (one per date) — a tag, so it can sit
-            # alongside numeric fields in a pivot without a type collision.
-            "booking_url": booking_url(origin, destination, depart_date, marker, cfg.get("adults", 1)),
+            "booking_url": booking_url(origin, destination, depart_date),
         },
         fields={
             "price": int(info["price"]),
