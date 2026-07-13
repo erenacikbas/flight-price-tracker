@@ -18,7 +18,10 @@ spec:
           restartPolicy: Never
           containers:
             - name: logger
-              image: ghcr.io/erenacikbas/flight-tracker-logger:latest
+              # Pinned by digest for reproducible rollbacks. To adopt a new build:
+              # after CI pushes, run `crane digest ghcr.io/erenacikbas/flight-tracker-logger:latest`
+              # (or read a seed pod's .status.containerStatuses[].imageID) and paste the sha256 here.
+              image: ghcr.io/erenacikbas/flight-tracker-logger@sha256:0c48b6930378569e8b3dcf8144e7ea5456eacd3b0195b3f84580be2185c97edc
               env:
                 - { name: INFLUXDB_URL, value: "http://influxdb.flight-tracker:8086" }
                 - { name: INFLUXDB_ORG, value: flights }

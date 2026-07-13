@@ -114,19 +114,22 @@ data:
               { "matcher": { "id": "byName", "options": "destination" }, "properties": [ { "id": "displayName", "value": "To" } ] },
               { "matcher": { "id": "byName", "options": "airline" }, "properties": [ { "id": "displayName", "value": "Airline(s)" } ] },
               { "matcher": { "id": "byName", "options": "stops" }, "properties": [ { "id": "displayName", "value": "Stops" } ] },
+              { "matcher": { "id": "byName", "options": "depart_time" }, "properties": [ { "id": "displayName", "value": "Depart" } ] },
+              { "matcher": { "id": "byName", "options": "duration_min" }, "properties": [ { "id": "unit", "value": "m" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Duration" } ] },
+              { "matcher": { "id": "byName", "options": "bag_price" }, "properties": [ { "id": "unit", "value": "suffix: ₺" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "+1 checked bag" } ] },
               { "matcher": { "id": "byName", "options": "airline_logo" }, "properties": [ { "id": "displayName", "value": "Logo" }, { "id": "custom.cellOptions", "value": { "type": "image" } }, { "id": "custom.width", "value": 64 } ] },
               { "matcher": { "id": "byName", "options": "price" }, "properties": [ { "id": "unit", "value": "currencyTRY" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Price (TRY, 2 adults)" } ] },
               { "matcher": { "id": "byName", "options": "booking_url" }, "properties": [ { "id": "displayName", "value": "Book" }, { "id": "links", "value": [ { "title": "Book on Kiwi", "url": "${__value.text}", "targetBlank": true } ] } ] }
             ]
           },
           "transformations": [
-            { "id": "organize", "options": { "indexByName": { "airline_logo": 0, "depart_date": 1, "origin": 2, "destination": 3, "airline": 4, "stops": 5, "price": 6, "booking_url": 7 } } }
+            { "id": "organize", "options": { "indexByName": { "airline_logo": 0, "depart_date": 1, "depart_time": 2, "origin": 3, "destination": 4, "airline": 5, "stops": 6, "duration_min": 7, "price": 8, "bag_price": 9, "booking_url": 10 } } }
           ],
           "targets": [
             {
               "refId": "A", "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> group(columns: [\"depart_date\", \"airline\", \"origin\", \"destination\", \"booking_url\", \"_field\"])\n  |> last()\n  |> group()\n  |> map(fn: (r) => ({ r with airline_logo: if exists r.airline_logo then r.airline_logo else \"\" }))\n  |> keep(columns: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> sort(columns: [\"price\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\" or r._field == \"duration_min\" or r._field == \"bag_price\"))\n  |> group(columns: [\"depart_date\", \"airline\", \"depart_time\", \"origin\", \"destination\", \"booking_url\", \"_field\"])\n  |> last()\n  |> group()\n  |> map(fn: (r) => ({ r with airline_logo: if exists r.airline_logo then r.airline_logo else \"\" }))\n  |> keep(columns: [\"depart_date\", \"airline\", \"airline_logo\", \"depart_time\", \"origin\", \"destination\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"airline_logo\", \"depart_time\", \"origin\", \"destination\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> sort(columns: [\"price\"])"
             }
           ]
         },
