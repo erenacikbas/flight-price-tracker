@@ -114,18 +114,19 @@ data:
               { "matcher": { "id": "byName", "options": "destination" }, "properties": [ { "id": "displayName", "value": "To" } ] },
               { "matcher": { "id": "byName", "options": "airline" }, "properties": [ { "id": "displayName", "value": "Airline(s)" } ] },
               { "matcher": { "id": "byName", "options": "stops" }, "properties": [ { "id": "displayName", "value": "Stops" } ] },
+              { "matcher": { "id": "byName", "options": "airline_logo" }, "properties": [ { "id": "displayName", "value": "Logo" }, { "id": "custom.cellOptions", "value": { "type": "image" } }, { "id": "custom.width", "value": 64 } ] },
               { "matcher": { "id": "byName", "options": "price" }, "properties": [ { "id": "unit", "value": "currencyTRY" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Price (TRY, 2 adults)" } ] },
               { "matcher": { "id": "byName", "options": "booking_url" }, "properties": [ { "id": "displayName", "value": "Book" }, { "id": "links", "value": [ { "title": "Book on Kiwi", "url": "${__value.text}", "targetBlank": true } ] } ] }
             ]
           },
           "transformations": [
-            { "id": "organize", "options": { "indexByName": { "depart_date": 0, "origin": 1, "destination": 2, "airline": 3, "stops": 4, "price": 5, "booking_url": 6 } } }
+            { "id": "organize", "options": { "indexByName": { "airline_logo": 0, "depart_date": 1, "origin": 2, "destination": 3, "airline": 4, "stops": 5, "price": 6, "booking_url": 7 } } }
           ],
           "targets": [
             {
               "refId": "A", "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> last()\n  |> keep(columns: [\"depart_date\", \"airline\", \"origin\", \"destination\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"origin\", \"destination\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> group()\n  |> sort(columns: [\"price\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> last()\n  |> keep(columns: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> group()\n  |> sort(columns: [\"price\"])"
             }
           ]
         },
@@ -138,6 +139,7 @@ data:
             "overrides": [
               { "matcher": { "id": "byName", "options": "depart_date" }, "properties": [ { "id": "displayName", "value": "Date" } ] },
               { "matcher": { "id": "byName", "options": "airline" }, "properties": [ { "id": "displayName", "value": "Cheapest airline(s)" } ] },
+              { "matcher": { "id": "byName", "options": "airline_logo" }, "properties": [ { "id": "displayName", "value": "Logo" }, { "id": "custom.cellOptions", "value": { "type": "image" } }, { "id": "custom.width", "value": 64 } ] },
               { "matcher": { "id": "byName", "options": "price" }, "properties": [
                   { "id": "unit", "value": "currencyTRY" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Cheapest (TRY, 2 adults)" },
                   { "id": "custom.cellOptions", "value": { "type": "color-background", "mode": "gradient" } },
@@ -146,13 +148,13 @@ data:
             ]
           },
           "transformations": [
-            { "id": "organize", "options": { "indexByName": { "depart_date": 0, "airline": 1, "price": 2 } } }
+            { "id": "organize", "options": { "indexByName": { "airline_logo": 0, "depart_date": 1, "airline": 2, "price": 3 } } }
           ],
           "targets": [
             {
               "refId": "A", "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group(columns: [\"depart_date\"]) |> min()\n  |> group()\n  |> keep(columns: [\"depart_date\", \"airline\", \"_value\"])\n  |> rename(columns: { _value: \"price\" })\n  |> sort(columns: [\"price\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group(columns: [\"depart_date\"]) |> min()\n  |> group()\n  |> keep(columns: [\"depart_date\", \"airline\", \"airline_logo\", \"_value\"])\n  |> rename(columns: { _value: \"price\" })\n  |> sort(columns: [\"price\"])"
             }
           ]
         }
@@ -295,6 +297,7 @@ data:
                   }
                 ]
               },
+              { "matcher": { "id": "byName", "options": "airline_logo" }, "properties": [ { "id": "displayName", "value": "Logo" }, { "id": "custom.cellOptions", "value": { "type": "image" } }, { "id": "custom.width", "value": 64 } ] },
               {
                 "matcher": {
                   "id": "byName",
@@ -329,9 +332,10 @@ data:
                   "origin": 2,
                   "destination": 3,
                   "airline": 4,
-                  "price": 5,
-                  "price_eur": 6,
-                  "booking_url": 7
+                  "airline_logo": 5,
+                  "price": 6,
+                  "price_eur": 7,
+                  "booking_url": 8
                 }
               }
             }
@@ -344,7 +348,7 @@ data:
                 "type": "influxdb",
                 "uid": "influxdb"
               },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"route_id\", \"depart_date\", \"airline\"]) |> last()\n  |> group(columns: [\"route_id\"]) |> min()\n  |> group()\n  |> keep(columns: [\"route_id\", \"depart_date\", \"origin\", \"destination\", \"airline\", \"booking_url\", \"_value\"])\n  |> rename(columns: { _value: \"price\" })\n  |> map(fn: (r) => ({ r with price_eur: float(v: r.price) / float(v: ${try_per_eur}) }))\n  |> sort(columns: [\"route_id\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"route_id\", \"depart_date\", \"airline\"]) |> last()\n  |> group(columns: [\"route_id\"]) |> min()\n  |> group()\n  |> keep(columns: [\"route_id\", \"depart_date\", \"origin\", \"destination\", \"airline\", \"airline_logo\", \"booking_url\", \"_value\"])\n  |> rename(columns: { _value: \"price\" })\n  |> map(fn: (r) => ({ r with price_eur: float(v: r.price) / float(v: ${try_per_eur}) }))\n  |> sort(columns: [\"route_id\"])"
             }
           ]
         },
