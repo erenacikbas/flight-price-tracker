@@ -19,7 +19,7 @@ spec:
           containers:
             - name: alerter
               # Same image as the logger; pinned by digest (bump together after a build).
-              image: ghcr.io/erenacikbas/flight-tracker-logger@sha256:PLACEHOLDER
+              image: ghcr.io/erenacikbas/flight-tracker-logger@sha256:425ac6b799da6c34acdeacc9d65d8b36b344b2e9ae39feb546c3f4ec6596c598
               command: ["python", "alerter.py"]
               env:
                 - { name: INFLUXDB_URL, value: "http://influxdb.flight-tracker:8086" }
