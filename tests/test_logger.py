@@ -13,27 +13,25 @@ def test_route_dates_from_range():
 
 
 def test_collect_one_point_per_date_and_airline():
-    def fetch(origin, destination, d, cfg):
-        return {"THAI": {"price": 24518, "stops": 1}, "Etihad": {"price": 25582, "stops": 1}}
+    def fetch(origin, destination, d):
+        return {"THAI": {"price": 24518, "stops": 1}, "Sichuan Airlines": {"price": 22829, "stops": 1}}
     records, attempted, succeeded = logger.collect(CFG, fetch=fetch, now=NOW)
     assert attempted == 2 and succeeded == 2
-    assert len(records) == 4  # 2 dates x 2 airlines
+    assert len(records) == 4
     assert {(r.tags["depart_date"], r.tags["airline"]) for r in records} == {
-        ("2026-10-30", "THAI"), ("2026-10-30", "Etihad"),
-        ("2026-10-31", "THAI"), ("2026-10-31", "Etihad")}
+        ("2026-10-30", "THAI"), ("2026-10-30", "Sichuan Airlines"),
+        ("2026-10-31", "THAI"), ("2026-10-31", "Sichuan Airlines")}
 
 
-def test_partial_failure_is_not_red_but_total_failure_is():
+def test_partial_ok_total_failure_flagged():
     calls = {"n": 0}
-    def flaky(origin, destination, d, cfg):
+    def flaky(o, d, day):
         calls["n"] += 1
         if calls["n"] == 1:
-            raise RuntimeError("Loading results")   # first date fails
-        return {"THAI": {"price": 24518, "stops": 0}}
-    records, attempted, succeeded = logger.collect(CFG, fetch=flaky, now=NOW)
-    assert attempted == 2 and succeeded == 1 and len(records) == 1   # partial ok
+            raise RuntimeError("timeout")
+        return {"THAI": {"price": 24518, "stops": 1}}
+    recs, att, ok = logger.collect(CFG, fetch=flaky, now=NOW)
+    assert att == 2 and ok == 1 and len(recs) == 1
 
-    def allfail(*a, **k):
-        raise RuntimeError("rate limited")
-    _, att, ok = logger.collect(CFG, fetch=allfail, now=NOW)
-    assert att == 2 and ok == 0   # main() turns this into exit 2
+    _, att2, ok2 = logger.collect(CFG, fetch=lambda *a: {}, now=NOW)
+    assert att2 == 2 and ok2 == 0   # main() turns this into exit 2

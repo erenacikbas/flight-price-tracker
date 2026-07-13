@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Flight price logger: cheapest fare per airline per departure date (Google Flights).
-
-Runs as a Kubernetes CronJob. Sweeps the route's date range; for each date fetches
-live Google fares (retrying through Google's "Loading results" shell) and writes one
-point per (route, depart_date, airline). Dates that never load this run are skipped
-(they retry next run) and do NOT fail the run; a fetch exception is a hard failure.
+"""Flight price logger: cheapest fare per airline per departure date (Google Flights
+via a headless browser). Sweeps the route's date range using one browser; writes one
+point per (route, depart_date, airline). Under-rendered/failed dates are skipped this
+run (fill next run); only a total wipeout is a hard failure.
 Exit codes: 0 ok, 2 hard failure.
 """
 import json
@@ -13,7 +11,6 @@ import sys
 import time
 from datetime import datetime, timezone, date, timedelta
 
-from flight_fetch import airline_prices
 from records import airline_date_record
 from influx_writer import influx_config_from_env, write_records
 
@@ -37,9 +34,10 @@ def route_dates(route: dict) -> list:
     return [route["depart_date"]] if route.get("depart_date") else []
 
 
-def collect(cfg: dict, fetch=airline_prices, now=None):
+def collect(cfg: dict, fetch, now=None):
+    """fetch(origin, destination, date) -> {airline: {price, stops}}."""
     now = now or datetime.now(timezone.utc)
-    gap = float(cfg.get("date_gap_seconds", 2))
+    gap = float(cfg.get("date_gap_seconds", 1))
     records, attempted, succeeded = [], 0, 0
     for route in cfg.get("routes", []):
         rid = route.get("id", f'{route["origin"]}-{route["destination"]}')
@@ -47,9 +45,12 @@ def collect(cfg: dict, fetch=airline_prices, now=None):
         for i, d in enumerate(dates):
             attempted += 1
             try:
-                per_airline = fetch(route["origin"], route["destination"], d, cfg)
-            except Exception as e:  # all attempts hit the loading shell / error this run
-                print(f"  {rid} {d}: no fares this run ({str(e)[:40]})", file=sys.stderr)
+                per_airline = fetch(route["origin"], route["destination"], d)
+            except Exception as e:
+                print(f"  {rid} {d}: fetch error ({str(e)[:50]})", file=sys.stderr)
+                per_airline = {}
+            if not per_airline:
+                print(f"  {rid} {d}: no fares this run", file=sys.stderr)
                 continue
             succeeded += 1
             cheapest = min(v["price"] for v in per_airline.values())
@@ -57,16 +58,18 @@ def collect(cfg: dict, fetch=airline_prices, now=None):
             for airline, info in per_airline.items():
                 records.append(airline_date_record(route, cfg, d, airline, info, now))
             if gap and i < len(dates) - 1:
-                time.sleep(gap)  # be gentle between dates
+                time.sleep(gap)
     return records, attempted, succeeded
 
 
 def main() -> int:
+    from flight_fetch import browser, fetch_date_with_retry
     cfg = load_config()
-    records, attempted, succeeded = collect(cfg)
+    with browser(cfg) as ctx:
+        records, attempted, succeeded = collect(
+            cfg, fetch=lambda o, d, day: fetch_date_with_retry(ctx, o, d, day, cfg))
     written = write_records(records, influx_config_from_env())
     print(f"Wrote {written} point(s); {succeeded}/{attempted} dates succeeded.")
-    # Every date failing (attempted>0, none succeeded) => likely rate-limited/broken => red.
     return 2 if attempted and succeeded == 0 else 0
 
 
