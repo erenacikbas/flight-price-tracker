@@ -21,7 +21,7 @@ spec:
               # Pinned by digest for reproducible rollbacks. To adopt a new build:
               # after CI pushes, run `crane digest ghcr.io/erenacikbas/flight-tracker-logger:latest`
               # (or read a seed pod's .status.containerStatuses[].imageID) and paste the sha256 here.
-              image: ghcr.io/erenacikbas/flight-tracker-logger@sha256:425ac6b799da6c34acdeacc9d65d8b36b344b2e9ae39feb546c3f4ec6596c598
+              image: ghcr.io/erenacikbas/flight-tracker-logger@sha256:3af306c7634c053e20ff58110afc7cb46a39dd4c777397852a2a24c3edd04cc6
               env:
                 - { name: INFLUXDB_URL, value: "http://influxdb.flight-tracker:8086" }
                 - { name: INFLUXDB_ORG, value: flights }
