@@ -13,6 +13,7 @@ Telegram creds are optional: with none set the run still evaluates and logs what
 it *would* send, so the logic is verifiable before the bot token is provisioned.
 Exit 0 always (alerting must never crash the schedule); errors go to stderr.
 """
+import json
 import os
 import sys
 import urllib.parse
@@ -20,6 +21,17 @@ import urllib.request
 from datetime import datetime, timezone
 
 ALERT_MEASUREMENT = "alert_state"
+
+
+def load_targets(path):
+    """{route_id: alert_target} from routes.json; empty if unreadable/none set."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            cfg = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    return {r.get("id"): int(r["alert_target"])
+            for r in cfg.get("routes", []) if r.get("alert_target")}
 
 
 # ---- pure, unit-tested decision logic --------------------------------------
@@ -40,6 +52,26 @@ def decide_low_alert(cur_price, state_price, min_drop_pct):
         drop_pct = (state_price - cur_price) / state_price * 100.0
         return (drop_pct >= min_drop_pct, cur_price)
     return (False, None)
+
+
+def decide_target_alert(cur_price, target, already_below):
+    """One route's target check. `already_below` = did we alert for the current
+    below-target episode. Returns (should_alert, new_state) where new_state is
+    True (below+notified), False (reset, back above), or None (no state change).
+
+    Fires once when the price crosses at/below target; re-arms when it goes back above.
+    """
+    if target is None or cur_price is None:
+        return (False, None)
+    if cur_price <= target:
+        return (not already_below, True)
+    return (False, False) if already_below else (False, None)
+
+
+def format_target(route_id, cur_price, target, depart_date, airline, currency):
+    return (f"\U0001f3af <b>{route_id} hit your target!</b>\n"
+            f"{int(cur_price):,} {currency} (target {int(target):,})\n"
+            f"{depart_date} · {airline}")
 
 
 def is_stale(last_ts, now, stale_minutes):
@@ -131,19 +163,23 @@ def last_data_time(qapi, bucket):
 
 
 def alert_state(qapi, bucket):
-    """Return ({route_id: alerted_low}, last_stale_ts) from the alert_state measurement."""
+    """Return ({route_id: alerted_low}, last_stale_ts, {route_id: target_state})
+    from the alert_state measurement."""
     flux = f'''from(bucket: "{bucket}")
   |> range(start: -60d)
   |> filter(fn: (r) => r._measurement == "{ALERT_MEASUREMENT}")
   |> group(columns: ["route_id", "_field"]) |> last()'''
-    lows, stale_ts = {}, None
+    lows, stale_ts, targets = {}, None, {}
     for tbl in qapi.query(flux):
         for rec in tbl.records:
-            if rec.values.get("_field") == "alerted_low":
+            field = rec.values.get("_field")
+            if field == "alerted_low":
                 lows[rec.values.get("route_id")] = rec.get_value()
-            elif rec.values.get("_field") == "last_stale_ts":
+            elif field == "last_stale_ts":
                 stale_ts = rec.get_value()
-    return lows, stale_ts
+            elif field == "target_state":
+                targets[rec.values.get("route_id")] = rec.get_value()
+    return lows, stale_ts, targets
 
 
 def main():
@@ -156,6 +192,7 @@ def main():
     min_drop = float(os.environ.get("MIN_DROP_PCT", "1.0"))
     stale_min = int(os.environ.get("STALE_MINUTES", "60"))
     suppress_h = float(os.environ.get("STALE_SUPPRESS_HOURS", "3"))
+    routes_path = os.environ.get("ROUTES_PATH", "routes.json")
     now = datetime.now(timezone.utc)
 
     client = InfluxDBClient(url=cfg["url"], token=cfg["token"], org=cfg["org"])
@@ -163,7 +200,8 @@ def main():
     writes = []
 
     current = current_cheapest(qapi, cfg["bucket"])
-    lows, stale_ts = alert_state(qapi, cfg["bucket"])
+    lows, stale_ts, target_states = alert_state(qapi, cfg["bucket"])
+    targets = load_targets(routes_path)
 
     for route_id, (price, depart_date, airline, currency) in sorted(current.items()):
         should, new_state = decide_low_alert(price, lows.get(route_id), min_drop)
@@ -173,6 +211,15 @@ def main():
         if new_state is not None:
             writes.append(Point(ALERT_MEASUREMENT).tag("route_id", route_id)
                           .field("alerted_low", int(new_state)).time(now, WritePrecision.S))
+
+        already_below = target_states.get(route_id) == 1
+        t_should, t_state = decide_target_alert(price, targets.get(route_id), already_below)
+        if t_should:
+            send_telegram(format_target(route_id, price, targets[route_id],
+                                        depart_date, airline, currency), tg_token, tg_chat)
+        if t_state is not None:
+            writes.append(Point(ALERT_MEASUREMENT).tag("route_id", route_id)
+                          .field("target_state", 1 if t_state else 0).time(now, WritePrecision.S))
 
     last_ts = last_data_time(qapi, cfg["bucket"])
     if is_stale(last_ts, now, stale_min) and should_alert_stale(stale_ts, now, suppress_h):

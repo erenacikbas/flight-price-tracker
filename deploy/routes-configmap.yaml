@@ -13,13 +13,13 @@ data:
       "max_stopovers": 10,
       "routes": [
         { "id": "IST-DPS", "origin": "IST", "destination": "DPS", "trip": "one-way",
-          "fly_from": "city:IST", "fly_to": "city:DPS",
+          "fly_from": "city:IST", "fly_to": "city:DPS", "alert_target": 32000,
           "date_range": { "start": "2026-10-24", "end": "2026-11-01" } },
         { "id": "BJV-ESB", "origin": "BJV", "destination": "ESB", "trip": "one-way",
-          "fly_from": "city:BJV", "fly_to": "city:ANK", "max_stopovers": 2,
+          "fly_from": "city:BJV", "fly_to": "city:ANK", "max_stopovers": 2, "alert_target": 2900,
           "date_range": { "start": "2026-08-01", "end": "2026-08-31" } },
         { "id": "ESB-DPS", "origin": "ESB", "destination": "DPS", "trip": "one-way",
-          "fly_from": "city:ANK", "fly_to": "city:DPS", "max_stopovers": 4,
+          "fly_from": "city:ANK", "fly_to": "city:DPS", "max_stopovers": 4, "alert_target": 36000,
           "date_range": { "start": "2026-10-24", "end": "2026-11-01" } }
       ]
     }

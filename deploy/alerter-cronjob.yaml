@@ -27,6 +27,7 @@ spec:
                 - { name: INFLUXDB_BUCKET, value: flight_prices }
                 - { name: MIN_DROP_PCT, value: "1.0" } # alert on a new low >= 1% below prior
                 - { name: STALE_MINUTES, value: "60" } # warn if no data for an hour
+                - { name: ROUTES_PATH, value: /config/routes.json } # for per-route alert_target
                 - name: INFLUXDB_TOKEN
                   valueFrom:
                     secretKeyRef: { name: flight-tracker-secrets, key: influxdb-token }
@@ -39,3 +40,8 @@ spec:
               resources:
                 requests: { cpu: 25m, memory: 64Mi }
                 limits: { memory: 128Mi }
+              volumeMounts:
+                - { name: routes, mountPath: /config }
+          volumes:
+            - name: routes
+              configMap: { name: flight-tracker-routes }

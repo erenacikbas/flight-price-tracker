@@ -1,5 +1,6 @@
 from datetime import datetime, timezone, timedelta
-from alerter import decide_low_alert, is_stale, should_alert_stale, format_low
+from alerter import (decide_low_alert, decide_target_alert, is_stale,
+                     should_alert_stale, format_low, format_target)
 
 NOW = datetime(2026, 7, 13, 12, 0, tzinfo=timezone.utc)
 
@@ -34,6 +35,29 @@ def test_should_alert_stale_rate_limits():
     assert should_alert_stale(None, NOW, 3) is True
     assert should_alert_stale(NOW - timedelta(hours=4), NOW, 3) is True
     assert should_alert_stale(NOW - timedelta(hours=1), NOW, 3) is False
+
+
+def test_decide_target_fires_once_on_crossing_below():
+    # first time at/below target -> alert and mark below
+    assert decide_target_alert(31000, 32000, already_below=False) == (True, True)
+    # still below and already alerted -> no repeat, stay below
+    assert decide_target_alert(31500, 32000, already_below=True) == (False, True)
+
+
+def test_decide_target_rearms_when_back_above():
+    # back above target after being below -> reset (no alert)
+    assert decide_target_alert(33000, 32000, already_below=True) == (False, False)
+    # above target and never below -> nothing to write
+    assert decide_target_alert(33000, 32000, already_below=False) == (False, None)
+
+
+def test_decide_target_noop_without_target():
+    assert decide_target_alert(31000, None, already_below=False) == (False, None)
+
+
+def test_format_target_contains_key_facts():
+    msg = format_target("ESB-DPS", 35500, 36000, "2026-10-28", "AirAsia X", "TRY")
+    assert "ESB-DPS" in msg and "35,500" in msg and "36,000" in msg and "2026-10-28" in msg
 
 
 def test_format_low_contains_key_facts():
