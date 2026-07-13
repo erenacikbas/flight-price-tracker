@@ -12,6 +12,7 @@ spec:
     spec:
       backoffLimit: 1
       activeDeadlineSeconds: 1200
+      ttlSecondsAfterFinished: 3600   # auto-delete finished jobs+pods after 1h
       template:
         spec:
           restartPolicy: Never
