@@ -126,7 +126,7 @@ data:
             {
               "refId": "A", "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> last()\n  |> keep(columns: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> group()\n  |> sort(columns: [\"price\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> group(columns: [\"depart_date\", \"airline\", \"origin\", \"destination\", \"booking_url\", \"_field\"])\n  |> last()\n  |> group()\n  |> map(fn: (r) => ({ r with airline_logo: if exists r.airline_logo then r.airline_logo else \"\" }))\n  |> keep(columns: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"airline_logo\", \"origin\", \"destination\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> sort(columns: [\"price\"])"
             }
           ]
         },
