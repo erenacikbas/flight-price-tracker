@@ -18,7 +18,7 @@ data:
             "type": "query",
             "label": "Route",
             "datasource": { "type": "influxdb", "uid": "influxdb" },
-            "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"flight_prices\", tag: \"route_id\")",
+            "query": "from(bucket: \"flight_prices\")\n  |> range(start: -7d)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> keep(columns: [\"route_id\"])\n  |> group()\n  |> distinct(column: \"route_id\")",
             "refresh": 1,
             "sort": 1,
             "includeAll": false,
