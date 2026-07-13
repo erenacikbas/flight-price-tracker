@@ -46,7 +46,7 @@ data:
         {
           "type": "stat",
           "title": "Cheapest fare now (TRY, 2 adults)",
-          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+          "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
           "fieldConfig": { "defaults": { "unit": "suffix: ₺", "decimals": 0 } },
           "options": { "textMode": "value", "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
           "targets": [
@@ -60,7 +60,7 @@ data:
         {
           "type": "stat",
           "title": "Cheapest now (EUR @ ${try_per_eur})",
-          "gridPos": { "h": 6, "w": 8, "x": 8, "y": 0 },
+          "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
           "fieldConfig": { "defaults": { "unit": "prefix: €", "decimals": 0 } },
           "options": { "textMode": "value", "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
           "targets": [
@@ -74,7 +74,7 @@ data:
         {
           "type": "stat",
           "title": "Days to departure (nearest tracked)",
-          "gridPos": { "h": 6, "w": 8, "x": 16, "y": 0 },
+          "gridPos": { "h": 6, "w": 6, "x": 12, "y": 0 },
           "fieldConfig": { "defaults": { "unit": "short" } },
           "options": { "textMode": "value", "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
           "targets": [
@@ -82,6 +82,25 @@ data:
               "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
               "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and r._field == \"days_to_departure\")\n  |> group() |> min()"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Now vs tracked low (0% = best seen)",
+          "gridPos": { "h": 6, "w": 6, "x": 18, "y": 0 },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent", "decimals": 1,
+              "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null }, { "color": "yellow", "value": 3 }, { "color": "orange", "value": 10 }, { "color": "red", "value": 20 } ] }
+            }
+          },
+          "options": { "textMode": "value", "colorMode": "background", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
+          "targets": [
+            {
+              "refId": "A", "format": "table",
+              "datasource": { "type": "influxdb", "uid": "influxdb" },
+              "query": "base = from(bucket: \"flight_prices\")\n  |> range(start: -60d)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and r._field == \"price\")\n  |> group(columns: [\"_time\"]) |> min() |> group() |> keep(columns: [\"_time\", \"_value\"])\nlo = base |> min() |> set(key: \"g\", value: \"x\") |> set(key: \"k\", value: \"lo\") |> keep(columns: [\"g\", \"k\", \"_value\"])\ncur = base |> last() |> set(key: \"g\", value: \"x\") |> set(key: \"k\", value: \"cur\") |> keep(columns: [\"g\", \"k\", \"_value\"])\nunion(tables: [lo, cur]) |> pivot(rowKey: [\"g\"], columnKey: [\"k\"], valueColumn: \"_value\") |> map(fn: (r) => ({ _value: (float(v: r.cur) - float(v: r.lo)) / float(v: r.lo) * 100.0 }))"
             }
           ]
         },
