@@ -20,7 +20,10 @@ data:
             "datasource": { "type": "influxdb", "uid": "influxdb" },
             "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"flight_prices\", tag: \"route_id\")",
             "refresh": 1,
-            "sort": 1
+            "sort": 1,
+            "includeAll": false,
+            "multi": false,
+            "current": { "text": "IST-DPS", "value": "IST-DPS" }
           },
           { "name": "try_per_eur", "type": "textbox", "label": "TRY per EUR", "query": "53", "current": { "text": "53", "value": "53" } }
         ]
@@ -103,15 +106,23 @@ data:
           "fieldConfig": {
             "defaults": {},
             "overrides": [
+              { "matcher": { "id": "byName", "options": "depart_date" }, "properties": [ { "id": "displayName", "value": "Date" } ] },
+              { "matcher": { "id": "byName", "options": "origin" }, "properties": [ { "id": "displayName", "value": "From" } ] },
+              { "matcher": { "id": "byName", "options": "destination" }, "properties": [ { "id": "displayName", "value": "To" } ] },
+              { "matcher": { "id": "byName", "options": "airline" }, "properties": [ { "id": "displayName", "value": "Airline(s)" } ] },
+              { "matcher": { "id": "byName", "options": "stops" }, "properties": [ { "id": "displayName", "value": "Stops" } ] },
               { "matcher": { "id": "byName", "options": "price" }, "properties": [ { "id": "unit", "value": "currencyTRY" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Price (TRY, 2 adults)" } ] },
               { "matcher": { "id": "byName", "options": "booking_url" }, "properties": [ { "id": "displayName", "value": "Book" }, { "id": "links", "value": [ { "title": "Book on Kiwi", "url": "${__value.text}", "targetBlank": true } ] } ] }
             ]
           },
+          "transformations": [
+            { "id": "organize", "options": { "indexByName": { "depart_date": 0, "origin": 1, "destination": 2, "airline": 3, "stops": 4, "price": 5, "booking_url": 6 } } }
+          ],
           "targets": [
             {
               "refId": "A", "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> last()\n  |> keep(columns: [\"depart_date\", \"airline\", \"origin\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"origin\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> group()\n  |> sort(columns: [\"price\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r.route_id == \"${route}\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> last()\n  |> keep(columns: [\"depart_date\", \"airline\", \"origin\", \"destination\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"origin\", \"destination\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> group()\n  |> sort(columns: [\"price\"])"
             }
           ]
         }
