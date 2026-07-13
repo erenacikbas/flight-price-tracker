@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: flight-alerter
+  namespace: flight-tracker
+spec:
+  schedule: "7,37 * * * *" # twice hourly, offset from the logger's */15
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 90
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: alerter
+              # Same image as the logger; pinned by digest (bump together after a build).
+              image: ghcr.io/erenacikbas/flight-tracker-logger@sha256:PLACEHOLDER
+              command: ["python", "alerter.py"]
+              env:
+                - { name: INFLUXDB_URL, value: "http://influxdb.flight-tracker:8086" }
+                - { name: INFLUXDB_ORG, value: flights }
+                - { name: INFLUXDB_BUCKET, value: flight_prices }
+                - { name: MIN_DROP_PCT, value: "1.0" } # alert on a new low >= 1% below prior
+                - { name: STALE_MINUTES, value: "60" } # warn if no data for an hour
+                - name: INFLUXDB_TOKEN
+                  valueFrom:
+                    secretKeyRef: { name: flight-tracker-secrets, key: influxdb-token }
+                - name: TELEGRAM_BOT_TOKEN
+                  valueFrom:
+                    secretKeyRef: { name: flight-tracker-secrets, key: telegram-bot-token, optional: true }
+                - name: TELEGRAM_CHAT_ID
+                  valueFrom:
+                    secretKeyRef: { name: flight-tracker-secrets, key: telegram-chat-id, optional: true }
+              resources:
+                requests: { cpu: 25m, memory: 64Mi }
+                limits: { memory: 128Mi }

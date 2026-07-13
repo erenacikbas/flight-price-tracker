@@ -4,5 +4,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
     && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY records.py flightlist_fetch.py influx_writer.py logger.py routes.json ./
+COPY records.py flightlist_fetch.py influx_writer.py logger.py alerter.py routes.json ./
 ENTRYPOINT ["python", "logger.py"]
