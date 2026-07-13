@@ -23,6 +23,7 @@ AIRLINES = {
     "CA": "Air China", "MU": "China Eastern", "CZ": "China Southern", "3U": "Sichuan Airlines",
     "TR": "Scoot", "ID": "Batik Air", "OD": "Batik Air Malaysia", "KU": "Kuwait Airways",
     "WY": "Oman Air", "GA": "Garuda Indonesia", "BR": "EVA Air", "PR": "Philippine Airlines",
+    "VF": "AJet", "XQ": "SunExpress", "VN": "Vietnam Airlines", "OV": "Salam Air",
 }
 CABINS = {"economy": "M", "premium-economy": "W", "business": "C", "first": "F"}
 
@@ -68,8 +69,9 @@ def search(route: dict, cfg: dict, get=None) -> list:
         "adults": cfg.get("adults", 2), "children": 0, "infants": 0,
         "selected_cabins": CABINS.get(cfg.get("cabin", "economy"), "M"),
         "curr": cfg.get("currency", "TRY"),
-        "limit": cfg.get("limit", 300),
-        "sort": "price", "max_stopovers": cfg.get("max_stopovers", 10),
+        "limit": route.get("limit", cfg.get("limit", 300)),
+        "sort": "price",
+        "max_stopovers": route.get("max_stopovers", cfg.get("max_stopovers", 10)),
         "flight_type": "oneway", "enable_vi": "true",
     }
     return (get(params) or {}).get("data", [])
