@@ -1,8 +1,8 @@
-# Playwright base image ships Chromium under /ms-playwright (the python pkg is pip-installed).
-FROM mcr.microsoft.com/playwright/python:v1.47.0-jammy
+FROM python:3.11-slim
 WORKDIR /app
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY records.py flight_fetch.py influx_writer.py logger.py routes.json ./
-ENTRYPOINT ["python3", "logger.py"]
+COPY records.py flightlist_fetch.py influx_writer.py logger.py routes.json ./
+ENTRYPOINT ["python", "logger.py"]

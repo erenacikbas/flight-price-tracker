@@ -4,14 +4,14 @@ metadata:
   name: flight-logger
   namespace: flight-tracker
 spec:
-  schedule: "7 * * * *"          # hourly (off :00) — a full browser sweep of 9 dates takes several minutes
+  schedule: "*/15 * * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
-      backoffLimit: 1
-      activeDeadlineSeconds: 1200
+      backoffLimit: 2
+      activeDeadlineSeconds: 120
       ttlSecondsAfterFinished: 3600   # auto-delete finished jobs+pods after 1h
       template:
         spec:
@@ -28,12 +28,9 @@ spec:
                   valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: influxdb-token } }
               volumeMounts:
                 - { name: routes, mountPath: /config }
-                - { name: dshm, mountPath: /dev/shm }
               resources:
-                requests: { cpu: 250m, memory: 512Mi }
-                limits: { cpu: "1", memory: 2Gi }
+                requests: { cpu: 50m, memory: 128Mi }
+                limits: { cpu: 500m, memory: 256Mi }
           volumes:
             - name: routes
               configMap: { name: flight-tracker-routes }
-            - name: dshm
-              emptyDir: { medium: Memory, sizeLimit: 512Mi }

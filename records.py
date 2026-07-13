@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime, date
-from urllib.parse import quote_plus
 
 
 @dataclass
@@ -16,22 +15,23 @@ def _days_to_departure(depart_date: str, now: datetime) -> int:
 
 
 def booking_url(origin: str, destination: str, depart_date: str) -> str:
-    """Google Flights deep-link for the exact route + date (where the tracked fares live)."""
-    q = quote_plus(f"flights from {origin} to {destination} on {depart_date}")
-    return f"https://www.google.com/travel/flights?q={q}"
+    """Stable Kiwi.com search deep-link (via the flightlist affiliate) for route+date."""
+    return ("https://www.kiwi.com/deep?affilid=flightlistflightlistio&currency=TRY"
+            f"&from={origin}&to={destination}&departure={depart_date}")
 
 
-def airline_date_record(route: dict, cfg: dict, depart_date: str, airline: str, info: dict, now: datetime) -> Record:
-    """One point per (route, depart_date, airline): that airline's cheapest fare that day."""
-    origin, destination = route["origin"], route["destination"]
+def date_airline_record(route: dict, cfg: dict, depart_date: str, info: dict, now: datetime) -> Record:
+    """One point per (route, depart_date, airline): that airline's cheapest fare."""
+    origin = info.get("origin") or route["origin"]
+    destination = route["destination"]
     return Record(
         measurement="flight_price",
         tags={
-            "route_id": route.get("id", f"{origin}-{destination}"),
+            "route_id": route.get("id", f'{route["origin"]}-{destination}'),
             "origin": origin,
             "destination": destination,
             "depart_date": depart_date,
-            "airline": airline,
+            "airline": info["airline"],
             "currency": cfg.get("currency", "TRY").upper(),
             "booking_url": booking_url(origin, destination, depart_date),
         },

@@ -1,23 +1,17 @@
 {
   "currency": "TRY",
-  "gl": "TR",
-  "hl": "en",
   "cabin": "economy",
   "adults": 2,
-  "min_airlines": 4,
-  "max_attempts": 3,
-  "scrolls": 7,
-  "render_wait_ms": 6000,
-  "results_timeout_ms": 30000,
-  "nav_timeout_ms": 70000,
-  "date_gap_seconds": 4,
-  "google_socs_cookie": "SOCS=CAISHAgBEhJnd3NfMjAyNDA5MTAtMF9SQzEaAmVuIAEaBgiAo7C3Bg",
+  "limit": 400,
+  "max_stopovers": 10,
   "routes": [
     {
       "id": "IST-DPS",
       "origin": "IST",
       "destination": "DPS",
       "trip": "one-way",
+      "fly_from": "city:IST",
+      "fly_to": "city:DPS",
       "date_range": { "start": "2026-10-24", "end": "2026-11-01" }
     }
   ]

@@ -1,0 +1,1681 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - link "FlightList" [ref=e5] [cursor=pointer]:
+        - /url: index.php
+        - generic [ref=e6]: 
+        - text: FlightList
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - button "Menu" [ref=e9] [cursor=pointer]
+          - text:  
+        - button "Share" [ref=e10] [cursor=pointer]
+    - generic [ref=e13]:
+      - heading "Cheap Flights. Simplified." [level=1] [ref=e14]
+      - paragraph [ref=e15]: Find the cheapest flights to any destination in the world.
+      - paragraph [ref=e16]:
+        - text: Discover
+        - generic [ref=e17]: more affordable routes
+        - text: and
+        - generic [ref=e18]: cheaper dates
+        - text: within a
+        - generic [ref=e19]: date range
+        - text: .
+      - paragraph [ref=e20]:
+        - mark [ref=e21]:
+          - text: ⭐ Search by
+          - strong [ref=e22]: country
+          - text: or
+          - strong [ref=e23]: region
+          - text: to discover more affordable routes, like Netherlands → Italy or Europe → South East Asia.
+    - generic [ref=e25]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: 
+          - textbox "Enter your departure city, airport, country or region" [ref=e32] [cursor=pointer]:
+            - /placeholder: Departure city, airport, country or region
+            - text: Istanbul (IST)
+          - button "Clear departure" [ref=e33] [cursor=pointer]:
+            - generic [ref=e34]: 
+        - combobox [ref=e36] [cursor=pointer]:
+          - option "One Way" [selected]
+          - option "Return"
+        - generic [ref=e37]:
+          - generic [ref=e38]: 
+          - textbox "Enter your destination city, airport, country or region" [ref=e41] [cursor=pointer]:
+            - /placeholder: Destination city, airport, country or region
+            - text: Denpasar (DPS)
+          - button "Clear destination" [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]: 
+        - generic [ref=e44]:
+          - generic [ref=e45]: 
+          - generic "Select a departure date range" [ref=e47] [cursor=pointer]: Oct 25th - Oct 31st, 2026
+        - text: 
+        - generic [ref=e49]:
+          - generic [ref=e50]: 
+          - combobox [ref=e52] [cursor=pointer]:
+            - option "1 Adult"
+            - option "2 Adults" [selected]
+            - option "3 Adults"
+            - option "4 Adults"
+            - option "5 Adults"
+          - combobox [ref=e53] [cursor=pointer]:
+            - option "0 Children" [selected]
+            - option "1 Child"
+            - option "2 Children"
+            - option "3 Children"
+            - option "4 Children"
+            - option "5 Children"
+          - combobox [ref=e54] [cursor=pointer]:
+            - option "0 Infants" [selected]
+            - option "1 Infant"
+            - option "2 Infants"
+            - option "3 Infants"
+            - option "4 Infants"
+            - option "5 Infants"
+        - generic [ref=e55]:
+          - generic [ref=e56]: 
+          - combobox [ref=e58] [cursor=pointer]:
+            - option "Economy" [selected]
+            - option "Premium Economy"
+            - option "Business"
+            - option "First Class"
+        - generic [ref=e59]:
+          - generic [ref=e60]: 
+          - combobox [ref=e62] [cursor=pointer]:
+            - option "US Dollar"
+            - option "Australian Dollar"
+            - option "Azerbaijani Manat"
+            - option "Brazilian Real"
+            - option "British Pound"
+            - option "Canadian Dollar"
+            - option "Chinese Yuan"
+            - option "Danish Krone"
+            - option "Euro"
+            - option "Israeli Shekel"
+            - option "Indian Rupee"
+            - option "Mexican Peso"
+            - option "New Zealand Dollar"
+            - option "Norwegian Krone"
+            - option "Polish Zloty"
+            - option "Russian Ruble"
+            - option "Singapore Dollar"
+            - option "South African Rand"
+            - option "Swedish Krona"
+            - option "Swiss Franc"
+            - option "Turkish Lira" [selected]
+        - generic [ref=e63]:
+          - generic [ref=e64]: 
+          - combobox [ref=e66] [cursor=pointer]:
+            - option "Lowest Price" [selected]
+            - option "Best Quality"
+            - option "Shortest Duration"
+            - option "Nearest Date"
+        - generic [ref=e67]:
+          - generic [ref=e68]: 
+          - combobox [ref=e70] [cursor=pointer]:
+            - option "Any stops" [selected]
+            - option "Direct only"
+            - option "Up to 1 stop"
+            - option "Up to 2 stops"
+            - option "Up to 3 stops"
+            - option "Up to 4 stops"
+        - text:    
+        - button "Additional Options" [ref=e72] [cursor=pointer]
+        - button "Search" [active] [ref=e74] [cursor=pointer]
+      - list [ref=e2273]:
+        - listitem [ref=e2274]:
+          - generic [ref=e2275]:
+            - generic [ref=e2276]: ₺43960
+            - generic [ref=e2278]:
+              - generic [ref=e2279]:
+                - img "Gulf Air Bahrain" [ref=e2280]
+                - img "Gulf Air Bahrain" [ref=e2281]
+                - img "VietJet Air" [ref=e2282]
+                - img "VietJet Air" [ref=e2283]
+              - generic [ref=e2284]: 6:05am - 1:05pm Sun Oct 25th 2026
+              - generic [ref=e2285]: 26h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2286]: 3 Stops
+            - button [ref=e2288] [cursor=pointer]:
+              - generic [ref=e2289]: 
+          - text:                     
+        - listitem [ref=e2290]:
+          - generic [ref=e2291]:
+            - generic [ref=e2292]: ₺44287
+            - generic [ref=e2294]:
+              - generic [ref=e2295]:
+                - img "Gulf Air Bahrain" [ref=e2296]
+                - img "Gulf Air Bahrain" [ref=e2297]
+                - img "AirAsia" [ref=e2298]
+                - img "AirAsia" [ref=e2299]
+              - generic [ref=e2300]: 6:05am - 12:15pm Sun Oct 25th 2026
+              - generic [ref=e2301]: 25h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2302]: 3 Stops
+            - button [ref=e2304] [cursor=pointer]:
+              - generic [ref=e2305]: 
+          - text:                     
+        - listitem [ref=e2306]:
+          - generic [ref=e2307]:
+            - generic [ref=e2308]: ₺46245
+            - generic [ref=e2310]:
+              - generic [ref=e2311]:
+                - img "Air Arabia" [ref=e2312]
+                - img "Air Arabia" [ref=e2313]
+                - img "AirAsia" [ref=e2314]
+              - generic [ref=e2315]: 2:35pm - 4:40pm Sun Oct 25th 2026
+              - generic [ref=e2316]: 21h 5m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2317]: 2 Stops
+            - button [ref=e2319] [cursor=pointer]:
+              - generic [ref=e2320]: 
+          - text:                
+        - listitem [ref=e2321]:
+          - generic [ref=e2322]:
+            - generic [ref=e2323]: ₺47145
+            - generic [ref=e2325]:
+              - generic [ref=e2326]:
+                - img "Air Arabia" [ref=e2327]
+                - img "Air Arabia" [ref=e2328]
+                - img "AirAsia" [ref=e2329]
+              - generic [ref=e2330]: 2:35pm - 2:55pm Sun Oct 25th 2026
+              - generic [ref=e2331]: 19h 20m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2332]: 2 Stops
+            - button [ref=e2334] [cursor=pointer]:
+              - generic [ref=e2335]: 
+          - text:                
+        - listitem [ref=e2336]:
+          - generic [ref=e2337]:
+            - generic [ref=e2338]: ₺48720
+            - generic [ref=e2340]:
+              - generic [ref=e2341]:
+                - img "Oman Air" [ref=e2342]
+                - img "Oman Air" [ref=e2343]
+                - img "Indonesia AirAsia" [ref=e2344]
+              - generic [ref=e2345]: 6:30pm - 8:45pm Sun Oct 25th 2026
+              - generic [ref=e2346]: 21h 15m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2347]: 2 Stops
+            - button [ref=e2349] [cursor=pointer]:
+              - generic [ref=e2350]: 
+          - text:                
+        - listitem [ref=e2351]:
+          - generic [ref=e2352]:
+            - generic [ref=e2353]: ₺48868
+            - generic [ref=e2355]:
+              - generic [ref=e2356]:
+                - img "Oman Air" [ref=e2357]
+                - img "Oman Air" [ref=e2358]
+                - img "Lion Air" [ref=e2359]
+              - generic [ref=e2360]: 6:30pm - 8:35pm Sun Oct 25th 2026
+              - generic [ref=e2361]: 21h 5m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2362]: 2 Stops
+            - button [ref=e2364] [cursor=pointer]:
+              - generic [ref=e2365]: 
+          - text:                
+        - listitem [ref=e2366]:
+          - generic [ref=e2367]:
+            - generic [ref=e2368]: ₺49006
+            - generic [ref=e2370]:
+              - generic [ref=e2371]:
+                - img "IndiGo Airlines" [ref=e2372]
+                - img "IndiGo Airlines" [ref=e2373]
+                - img "Jetstar Airways" [ref=e2374]
+              - generic [ref=e2375]: 8:00pm - 10:00pm Mon Oct 26th 2026
+              - generic [ref=e2376]: 21h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2377]: 2 Stops
+            - button [ref=e2379] [cursor=pointer]:
+              - generic [ref=e2380]: 
+          - text:                
+        - listitem [ref=e2381]:
+          - generic [ref=e2382]:
+            - generic [ref=e2383]: ₺49006
+            - generic [ref=e2385]:
+              - generic [ref=e2386]:
+                - img "IndiGo Airlines" [ref=e2387]
+                - img "IndiGo Airlines" [ref=e2388]
+                - img "Jetstar Airways" [ref=e2389]
+              - generic [ref=e2390]: 8:00pm - 10:00pm Sun Oct 25th 2026
+              - generic [ref=e2391]: 21h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2392]: 2 Stops
+            - button [ref=e2394] [cursor=pointer]:
+              - generic [ref=e2395]: 
+          - text:                
+        - listitem [ref=e2396]:
+          - generic [ref=e2397]:
+            - generic [ref=e2398]: ₺49155
+            - generic [ref=e2400]:
+              - generic [ref=e2401]:
+                - img "Aegean" [ref=e2402]
+                - img "Scoot" [ref=e2403]
+                - img "Scoot" [ref=e2404]
+              - generic [ref=e2405]: 6:30am - 10:10am Fri Oct 30th 2026
+              - generic [ref=e2406]: 22h 40m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2407]: 2 Stops
+            - button [ref=e2409] [cursor=pointer]:
+              - generic [ref=e2410]: 
+          - text:                
+        - listitem [ref=e2411]:
+          - generic [ref=e2412]:
+            - generic [ref=e2413]: ₺49241
+            - generic [ref=e2415]:
+              - generic [ref=e2416]:
+                - img "Aegean" [ref=e2417]
+                - img "Scoot" [ref=e2418]
+                - img "Scoot" [ref=e2419]
+              - generic [ref=e2420]: 6:30am - 10:10am Mon Oct 26th 2026
+              - generic [ref=e2421]: 22h 40m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2422]: 2 Stops
+            - button [ref=e2424] [cursor=pointer]:
+              - generic [ref=e2425]: 
+          - text:                
+        - listitem [ref=e2426]:
+          - generic [ref=e2427]:
+            - generic [ref=e2428]: ₺49727
+            - generic [ref=e2430]:
+              - generic [ref=e2431]:
+                - img "Gulf Air Bahrain" [ref=e2432]
+                - img "Gulf Air Bahrain" [ref=e2433]
+                - img "IndiGo Airlines" [ref=e2434]
+              - generic [ref=e2435]: 6:05am - 1:10pm Sun Oct 25th 2026
+              - generic [ref=e2436]: 26h 5m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2437]: 2 Stops
+            - button [ref=e2439] [cursor=pointer]:
+              - generic [ref=e2440]: 
+          - text:                
+        - listitem [ref=e2441]:
+          - generic [ref=e2442]:
+            - generic [ref=e2443]: ₺49842
+            - generic [ref=e2445]:
+              - generic [ref=e2446]:
+                - img "Thai Airways" [ref=e2447]
+                - img "Thai Airways" [ref=e2448]
+              - generic [ref=e2449]: 4:30pm - 2:15pm Thu Oct 29th 2026
+              - generic [ref=e2450]: 16h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2451]: 1 Stop
+            - button [ref=e2453] [cursor=pointer]:
+              - generic [ref=e2454]: 
+          - text:           
+        - listitem [ref=e2455]:
+          - generic [ref=e2456]:
+            - generic [ref=e2457]: ₺49842
+            - generic [ref=e2459]:
+              - generic [ref=e2460]:
+                - img "Thai Airways" [ref=e2461]
+                - img "Thai Airways" [ref=e2462]
+              - generic [ref=e2463]: 4:30pm - 2:15pm Wed Oct 28th 2026
+              - generic [ref=e2464]: 16h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2465]: 1 Stop
+            - button [ref=e2467] [cursor=pointer]:
+              - generic [ref=e2468]: 
+          - text:           
+        - listitem [ref=e2469]:
+          - generic [ref=e2470]:
+            - generic [ref=e2471]: ₺49842
+            - generic [ref=e2473]:
+              - generic [ref=e2474]:
+                - img "Thai Airways" [ref=e2475]
+                - img "Thai Airways" [ref=e2476]
+              - generic [ref=e2477]: 4:30pm - 2:15pm Tue Oct 27th 2026
+              - generic [ref=e2478]: 16h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2479]: 1 Stop
+            - button [ref=e2481] [cursor=pointer]:
+              - generic [ref=e2482]: 
+          - text:           
+        - listitem [ref=e2483]:
+          - generic [ref=e2484]:
+            - generic [ref=e2485]: ₺50087
+            - generic [ref=e2487]:
+              - generic [ref=e2488]:
+                - img "Thai Airways" [ref=e2489]
+                - img "Thai Airways" [ref=e2490]
+              - generic [ref=e2491]: 4:30pm - 6:00pm Wed Oct 28th 2026
+              - generic [ref=e2492]: 20h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2493]: 1 Stop
+            - button [ref=e2495] [cursor=pointer]:
+              - generic [ref=e2496]: 
+          - text:           
+        - listitem [ref=e2497]:
+          - generic [ref=e2498]:
+            - generic [ref=e2499]: ₺50130
+            - generic [ref=e2501]:
+              - generic [ref=e2502]:
+                - img "Thai Airways" [ref=e2503]
+                - img "Thai Airways" [ref=e2504]
+              - generic [ref=e2505]: 4:30pm - 6:00pm Thu Oct 29th 2026
+              - generic [ref=e2506]: 20h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2507]: 1 Stop
+            - button [ref=e2509] [cursor=pointer]:
+              - generic [ref=e2510]: 
+          - text:           
+        - listitem [ref=e2511]:
+          - generic [ref=e2512]:
+            - generic [ref=e2513]: ₺50229
+            - generic [ref=e2515]:
+              - generic [ref=e2516]:
+                - img "Etihad Airways" [ref=e2517]
+                - img "Etihad Airways" [ref=e2518]
+              - generic [ref=e2519]: 2:00pm - 11:35am Tue Oct 27th 2026
+              - generic [ref=e2520]: 16h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2521]: 1 Stop
+            - button [ref=e2523] [cursor=pointer]:
+              - generic [ref=e2524]: 
+          - text:           
+        - listitem [ref=e2525]:
+          - generic [ref=e2526]:
+            - generic [ref=e2527]: ₺50230
+            - generic [ref=e2529]:
+              - generic [ref=e2530]:
+                - img "Etihad Airways" [ref=e2531]
+                - img "Etihad Airways" [ref=e2532]
+              - generic [ref=e2533]: 2:00pm - 11:35am Mon Oct 26th 2026
+              - generic [ref=e2534]: 16h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2535]: 1 Stop
+            - button [ref=e2537] [cursor=pointer]:
+              - generic [ref=e2538]: 
+          - text:           
+        - listitem [ref=e2539]:
+          - generic [ref=e2540]:
+            - generic [ref=e2541]: ₺50230
+            - generic [ref=e2543]:
+              - generic [ref=e2544]:
+                - img "Etihad Airways" [ref=e2545]
+                - img "Etihad Airways" [ref=e2546]
+              - generic [ref=e2547]: 2:00pm - 11:35am Thu Oct 29th 2026
+              - generic [ref=e2548]: 16h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2549]: 1 Stop
+            - button [ref=e2551] [cursor=pointer]:
+              - generic [ref=e2552]: 
+          - text:           
+        - listitem [ref=e2553]:
+          - generic [ref=e2554]:
+            - generic [ref=e2555]: ₺50230
+            - generic [ref=e2557]:
+              - generic [ref=e2558]:
+                - img "Etihad Airways" [ref=e2559]
+                - img "Etihad Airways" [ref=e2560]
+              - generic [ref=e2561]: 2:00pm - 11:35am Wed Oct 28th 2026
+              - generic [ref=e2562]: 16h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2563]: 1 Stop
+            - button [ref=e2565] [cursor=pointer]:
+              - generic [ref=e2566]: 
+          - text:           
+        - listitem [ref=e2567]:
+          - generic [ref=e2568]:
+            - generic [ref=e2569]: ₺50692
+            - generic [ref=e2571]:
+              - generic [ref=e2572]:
+                - img "Etihad Airways" [ref=e2573]
+                - img "Etihad Airways" [ref=e2574]
+              - generic [ref=e2575]: 2:00pm - 11:35am Sun Oct 25th 2026
+              - generic [ref=e2576]: 16h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2577]: 1 Stop
+            - button [ref=e2579] [cursor=pointer]:
+              - generic [ref=e2580]: 
+          - text:           
+        - listitem [ref=e2581]:
+          - generic [ref=e2582]:
+            - generic [ref=e2583]: ₺50692
+            - generic [ref=e2585]:
+              - generic [ref=e2586]:
+                - img "Etihad Airways" [ref=e2587]
+                - img "Etihad Airways" [ref=e2588]
+              - generic [ref=e2589]: 2:00pm - 11:35am Fri Oct 30th 2026
+              - generic [ref=e2590]: 16h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2591]: 1 Stop
+            - button [ref=e2593] [cursor=pointer]:
+              - generic [ref=e2594]: 
+          - text:           
+        - listitem [ref=e2595]:
+          - generic [ref=e2596]:
+            - generic [ref=e2597]: ₺50908
+            - generic [ref=e2599]:
+              - generic [ref=e2600]:
+                - img "Gulf Air Bahrain" [ref=e2601]
+                - img "Gulf Air Bahrain" [ref=e2602]
+                - img "Vietnam Airlines" [ref=e2603]
+                - img "Vietnam Airlines" [ref=e2604]
+              - generic [ref=e2605]: 6:05am - 3:00pm Mon Oct 26th 2026
+              - generic [ref=e2606]: 27h 55m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2607]: 3 Stops
+            - button [ref=e2609] [cursor=pointer]:
+              - generic [ref=e2610]: 
+          - text:                     
+        - listitem [ref=e2611]:
+          - generic [ref=e2612]:
+            - generic [ref=e2613]: ₺51119
+            - generic [ref=e2615]:
+              - generic [ref=e2616]:
+                - img "Gulf Air Bahrain" [ref=e2617]
+                - img "Gulf Air Bahrain" [ref=e2618]
+                - img "VietJet Air" [ref=e2619]
+                - img "VietJet Air" [ref=e2620]
+              - generic [ref=e2621]: 6:05am - 12:55pm Tue Oct 27th 2026
+              - generic [ref=e2622]: 25h 50m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2623]: 3 Stops
+            - button [ref=e2625] [cursor=pointer]:
+              - generic [ref=e2626]: 
+          - text:                     
+        - listitem [ref=e2627]:
+          - generic [ref=e2628]:
+            - generic [ref=e2629]: ₺51198
+            - generic [ref=e2631]:
+              - generic [ref=e2632]:
+                - img "Turkish Airlines" [ref=e2633]
+                - img "AirAsia" [ref=e2634]
+              - generic [ref=e2635]: 5:15pm - 4:40pm Sun Oct 25th 2026
+              - generic [ref=e2636]: 18h 25m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2637]: 1 Stop
+            - button [ref=e2639] [cursor=pointer]:
+              - generic [ref=e2640]: 
+          - text:           
+        - listitem [ref=e2641]:
+          - generic [ref=e2642]:
+            - generic [ref=e2643]: ₺51532
+            - generic [ref=e2645]:
+              - generic [ref=e2646]:
+                - img "Gulf Air Bahrain" [ref=e2647]
+                - img "Gulf Air Bahrain" [ref=e2648]
+                - img "Vietnam Airlines" [ref=e2649]
+                - img "Vietnam Airlines" [ref=e2650]
+              - generic [ref=e2651]: 6:05am - 3:00pm Wed Oct 28th 2026
+              - generic [ref=e2652]: 27h 55m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2653]: 3 Stops
+            - button [ref=e2655] [cursor=pointer]:
+              - generic [ref=e2656]: 
+          - text:                     
+        - listitem [ref=e2657]:
+          - generic [ref=e2658]:
+            - generic [ref=e2659]: ₺51641
+            - generic [ref=e2661]:
+              - generic [ref=e2662]:
+                - img "Oman Air" [ref=e2663]
+                - img "Oman Air" [ref=e2664]
+                - img "Indonesia AirAsia" [ref=e2665]
+              - generic [ref=e2666]: 6:30pm - 6:30pm Sun Oct 25th 2026
+              - generic [ref=e2667]: 19h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2668]: 2 Stops
+            - button [ref=e2670] [cursor=pointer]:
+              - generic [ref=e2671]: 
+          - text:                
+        - listitem [ref=e2672]:
+          - generic [ref=e2673]:
+            - generic [ref=e2674]: ₺51736
+            - generic [ref=e2676]:
+              - generic [ref=e2677]:
+                - img "Qatar Airways" [ref=e2678]
+                - img "Qatar Airways" [ref=e2679]
+              - generic [ref=e2680]: 8:10pm - 5:20pm Sun Oct 25th 2026
+              - generic [ref=e2681]: 16h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2682]: 1 Stop
+            - button [ref=e2684] [cursor=pointer]:
+              - generic [ref=e2685]: 
+          - text:           
+        - listitem [ref=e2686]:
+          - generic [ref=e2687]:
+            - generic [ref=e2688]: ₺51736
+            - generic [ref=e2690]:
+              - generic [ref=e2691]:
+                - img "Qatar Airways" [ref=e2692]
+                - img "Qatar Airways" [ref=e2693]
+              - generic [ref=e2694]: 8:10pm - 10:40pm Thu Oct 29th 2026
+              - generic [ref=e2695]: 21h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2696]: 1 Stop
+            - button [ref=e2698] [cursor=pointer]:
+              - generic [ref=e2699]: 
+          - text:           
+        - listitem [ref=e2700]:
+          - generic [ref=e2701]:
+            - generic [ref=e2702]: ₺51736
+            - generic [ref=e2704]:
+              - generic [ref=e2705]:
+                - img "Qatar Airways" [ref=e2706]
+                - img "Qatar Airways" [ref=e2707]
+              - generic [ref=e2708]: 8:10pm - 10:40pm Sun Oct 25th 2026
+              - generic [ref=e2709]: 21h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2710]: 1 Stop
+            - button [ref=e2712] [cursor=pointer]:
+              - generic [ref=e2713]: 
+          - text:           
+        - listitem [ref=e2714]:
+          - generic [ref=e2715]:
+            - generic [ref=e2716]: ₺52032
+            - generic [ref=e2718]:
+              - generic [ref=e2719]:
+                - img "Turkish Airlines" [ref=e2720]
+                - img "AirAsia" [ref=e2721]
+              - generic [ref=e2722]: 5:15pm - 2:55pm Sun Oct 25th 2026
+              - generic [ref=e2723]: 16h 40m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2724]: 1 Stop
+            - button [ref=e2726] [cursor=pointer]:
+              - generic [ref=e2727]: 
+          - text:           
+        - listitem [ref=e2728]:
+          - generic [ref=e2729]:
+            - generic [ref=e2730]: ₺52223
+            - generic [ref=e2732]:
+              - generic [ref=e2733]:
+                - img "Gulf Air Bahrain" [ref=e2734]
+                - img "Gulf Air Bahrain" [ref=e2735]
+                - img "IndiGo Airlines" [ref=e2736]
+              - generic [ref=e2737]: 6:05am - 10:15am Sun Oct 25th 2026
+              - generic [ref=e2738]: 23h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2739]: 2 Stops
+            - button [ref=e2741] [cursor=pointer]:
+              - generic [ref=e2742]: 
+          - text:                
+        - listitem [ref=e2743]:
+          - generic [ref=e2744]:
+            - generic [ref=e2745]: ₺52704
+            - generic [ref=e2747]:
+              - generic [ref=e2748]:
+                - img "Qatar Airways" [ref=e2749]
+                - img "Qatar Airways" [ref=e2750]
+              - generic [ref=e2751]: 8:10pm - 5:20pm Tue Oct 27th 2026
+              - generic [ref=e2752]: 16h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2753]: 1 Stop
+            - button [ref=e2755] [cursor=pointer]:
+              - generic [ref=e2756]: 
+          - text:           
+        - listitem [ref=e2757]:
+          - generic [ref=e2758]:
+            - generic [ref=e2759]: ₺52704
+            - generic [ref=e2761]:
+              - generic [ref=e2762]:
+                - img "Qatar Airways" [ref=e2763]
+                - img "Qatar Airways" [ref=e2764]
+              - generic [ref=e2765]: 8:10pm - 10:40pm Wed Oct 28th 2026
+              - generic [ref=e2766]: 21h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2767]: 1 Stop
+            - button [ref=e2769] [cursor=pointer]:
+              - generic [ref=e2770]: 
+          - text:           
+        - listitem [ref=e2771]:
+          - generic [ref=e2772]:
+            - generic [ref=e2773]: ₺53238
+            - generic [ref=e2775]:
+              - generic [ref=e2776]:
+                - img "Qatar Airways" [ref=e2777]
+                - img "Qatar Airways" [ref=e2778]
+              - generic [ref=e2779]: 8:10pm - 10:40pm Mon Oct 26th 2026
+              - generic [ref=e2780]: 21h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2781]: 1 Stop
+            - button [ref=e2783] [cursor=pointer]:
+              - generic [ref=e2784]: 
+          - text:           
+        - listitem [ref=e2785]:
+          - generic [ref=e2786]:
+            - generic [ref=e2787]: ₺53258
+            - generic [ref=e2789]:
+              - generic [ref=e2790]:
+                - img "Turkish Airlines" [ref=e2791]
+                - img "Scoot" [ref=e2792]
+              - generic [ref=e2793]: 6:30pm - 7:05pm Tue Oct 27th 2026
+              - generic [ref=e2794]: 19h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2795]: 1 Stop
+            - button [ref=e2797] [cursor=pointer]:
+              - generic [ref=e2798]: 
+          - text:           
+        - listitem [ref=e2799]:
+          - generic [ref=e2800]:
+            - generic [ref=e2801]: ₺53746
+            - generic [ref=e2803]:
+              - generic [ref=e2804]:
+                - img "Etihad Airways" [ref=e2805]
+                - img "Etihad Airways" [ref=e2806]
+              - generic [ref=e2807]: 2:00pm - 11:35am Sat Oct 31st 2026
+              - generic [ref=e2808]: 16h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2809]: 1 Stop
+            - button [ref=e2811] [cursor=pointer]:
+              - generic [ref=e2812]: 
+          - text:           
+        - listitem [ref=e2813]:
+          - generic [ref=e2814]:
+            - generic [ref=e2815]: ₺54012
+            - generic [ref=e2817]:
+              - generic [ref=e2818]:
+                - img "Qatar Airways" [ref=e2819]
+                - img "Qatar Airways" [ref=e2820]
+              - generic [ref=e2821]: 8:10pm - 5:20pm Wed Oct 28th 2026
+              - generic [ref=e2822]: 16h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2823]: 1 Stop
+            - button [ref=e2825] [cursor=pointer]:
+              - generic [ref=e2826]: 
+          - text:           
+        - listitem [ref=e2827]:
+          - generic [ref=e2828]:
+            - generic [ref=e2829]: ₺54546
+            - generic [ref=e2831]:
+              - img "Turkish Airlines" [ref=e2833]
+              - generic [ref=e2834]: 2:10am - 7:55pm Sun Oct 25th 2026
+              - generic [ref=e2835]: 12h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2836]: Direct
+            - button [ref=e2838] [cursor=pointer]:
+              - generic [ref=e2839]: 
+          - text:      
+        - listitem [ref=e2840]:
+          - generic [ref=e2841]:
+            - generic [ref=e2842]: ₺54617
+            - generic [ref=e2844]:
+              - generic [ref=e2845]:
+                - img "IndiGo Airlines" [ref=e2846]
+                - img "IndiGo Airlines" [ref=e2847]
+                - img "Jetstar Airways" [ref=e2848]
+              - generic [ref=e2849]: 8:00pm - 10:00pm Wed Oct 28th 2026
+              - generic [ref=e2850]: 21h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2851]: 2 Stops
+            - button [ref=e2853] [cursor=pointer]:
+              - generic [ref=e2854]: 
+          - text:                
+        - listitem [ref=e2855]:
+          - generic [ref=e2856]:
+            - generic [ref=e2857]: ₺54617
+            - generic [ref=e2859]:
+              - generic [ref=e2860]:
+                - img "IndiGo Airlines" [ref=e2861]
+                - img "IndiGo Airlines" [ref=e2862]
+                - img "Jetstar Airways" [ref=e2863]
+              - generic [ref=e2864]: 8:00pm - 10:00pm Tue Oct 27th 2026
+              - generic [ref=e2865]: 21h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2866]: 2 Stops
+            - button [ref=e2868] [cursor=pointer]:
+              - generic [ref=e2869]: 
+          - text:                
+        - listitem [ref=e2870]:
+          - generic [ref=e2871]:
+            - generic [ref=e2872]: ₺55071
+            - generic [ref=e2874]:
+              - generic [ref=e2875]:
+                - img "Turkish Airlines" [ref=e2876]
+                - img "Scoot" [ref=e2877]
+              - generic [ref=e2878]: 5:15pm - 7:05pm Wed Oct 28th 2026
+              - generic [ref=e2879]: 20h 50m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2880]: 1 Stop
+            - button [ref=e2882] [cursor=pointer]:
+              - generic [ref=e2883]: 
+          - text:           
+        - listitem [ref=e2884]:
+          - generic [ref=e2885]:
+            - generic [ref=e2886]: ₺55122
+            - generic [ref=e2888]:
+              - generic [ref=e2889]:
+                - img "Gulf Air Bahrain" [ref=e2890]
+                - img "Gulf Air Bahrain" [ref=e2891]
+                - img "VietJet Air" [ref=e2892]
+                - img "VietJet Air" [ref=e2893]
+              - generic [ref=e2894]: 6:05am - 12:55pm Thu Oct 29th 2026
+              - generic [ref=e2895]: 25h 50m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2896]: 3 Stops
+            - button [ref=e2898] [cursor=pointer]:
+              - generic [ref=e2899]: 
+          - text:                     
+        - listitem [ref=e2900]:
+          - generic [ref=e2901]:
+            - generic [ref=e2902]: ₺55126
+            - generic [ref=e2904]:
+              - generic [ref=e2905]:
+                - img "Turkish Airlines" [ref=e2906]
+                - img "KLM Royal Dutch Airlines" [ref=e2907]
+              - generic [ref=e2908]: 6:30pm - 8:20pm Tue Oct 27th 2026
+              - generic [ref=e2909]: 20h 50m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2910]: 1 Stop
+            - button [ref=e2912] [cursor=pointer]:
+              - generic [ref=e2913]: 
+          - text:           
+        - listitem [ref=e2914]:
+          - generic [ref=e2915]:
+            - generic [ref=e2916]: ₺55146
+            - generic [ref=e2918]:
+              - generic [ref=e2919]:
+                - img "Turkish Airlines" [ref=e2920]
+                - img "Scoot" [ref=e2921]
+              - generic [ref=e2922]: 5:15pm - 7:05pm Mon Oct 26th 2026
+              - generic [ref=e2923]: 20h 50m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2924]: 1 Stop
+            - button [ref=e2926] [cursor=pointer]:
+              - generic [ref=e2927]: 
+          - text:           
+        - listitem [ref=e2928]:
+          - generic [ref=e2929]:
+            - generic [ref=e2930]: ₺55161
+            - generic [ref=e2932]:
+              - generic [ref=e2933]:
+                - img "Turkish Airlines" [ref=e2934]
+                - img "KLM Royal Dutch Airlines" [ref=e2935]
+              - generic [ref=e2936]: 5:15pm - 8:20pm Wed Oct 28th 2026
+              - generic [ref=e2937]: 22h 5m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2938]: 1 Stop
+            - button [ref=e2940] [cursor=pointer]:
+              - generic [ref=e2941]: 
+          - text:           
+        - listitem [ref=e2942]:
+          - generic [ref=e2943]:
+            - generic [ref=e2944]: ₺55181
+            - generic [ref=e2946]:
+              - generic [ref=e2947]:
+                - img "Turkish Airlines" [ref=e2948]
+                - img "Scoot" [ref=e2949]
+                - img "Scoot" [ref=e2950]
+              - generic [ref=e2951]: 8:00am - 10:10am Sun Oct 25th 2026
+              - generic [ref=e2952]: 21h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2953]: 2 Stops
+            - button [ref=e2955] [cursor=pointer]:
+              - generic [ref=e2956]: 
+          - text:                
+        - listitem [ref=e2957]:
+          - generic [ref=e2958]:
+            - generic [ref=e2959]: ₺55298
+            - generic [ref=e2961]:
+              - generic [ref=e2962]:
+                - img "Turkish Airlines" [ref=e2963]
+                - img "KLM Royal Dutch Airlines" [ref=e2964]
+              - generic [ref=e2965]: 5:15pm - 8:20pm Mon Oct 26th 2026
+              - generic [ref=e2966]: 22h 5m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2967]: 1 Stop
+            - button [ref=e2969] [cursor=pointer]:
+              - generic [ref=e2970]: 
+          - text:           
+        - listitem [ref=e2971]:
+          - generic [ref=e2972]:
+            - generic [ref=e2973]: ₺55819
+            - generic [ref=e2975]:
+              - generic [ref=e2976]:
+                - img "IndiGo Airlines" [ref=e2977]
+                - img "IndiGo Airlines" [ref=e2978]
+                - img "Indonesia AirAsia" [ref=e2979]
+              - generic [ref=e2980]: 8:00pm - 8:45pm Mon Oct 26th 2026
+              - generic [ref=e2981]: 19h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2982]: 2 Stops
+            - button [ref=e2984] [cursor=pointer]:
+              - generic [ref=e2985]: 
+          - text:                
+        - listitem [ref=e2986]:
+          - generic [ref=e2987]:
+            - generic [ref=e2988]: ₺55956
+            - generic [ref=e2990]:
+              - generic [ref=e2991]:
+                - img "IndiGo Airlines" [ref=e2992]
+                - img "IndiGo Airlines" [ref=e2993]
+                - img "Lion Air" [ref=e2994]
+              - generic [ref=e2995]: 8:00pm - 8:35pm Mon Oct 26th 2026
+              - generic [ref=e2996]: 19h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e2997]: 2 Stops
+            - button [ref=e2999] [cursor=pointer]:
+              - generic [ref=e3000]: 
+          - text:                
+        - listitem [ref=e3001]:
+          - generic [ref=e3002]:
+            - generic [ref=e3003]: ₺56232
+            - generic [ref=e3005]:
+              - generic [ref=e3006]:
+                - img "Gulf Air Bahrain" [ref=e3007]
+                - img "Gulf Air Bahrain" [ref=e3008]
+                - img "VietJet Air" [ref=e3009]
+                - img "VietJet Air" [ref=e3010]
+              - generic [ref=e3011]: 6:05am - 12:55pm Sat Oct 31st 2026
+              - generic [ref=e3012]: 25h 50m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3013]: 3 Stops
+            - button [ref=e3015] [cursor=pointer]:
+              - generic [ref=e3016]: 
+          - text:                     
+        - listitem [ref=e3017]:
+          - generic [ref=e3018]:
+            - generic [ref=e3019]: ₺56407
+            - generic [ref=e3021]:
+              - generic [ref=e3022]:
+                - img "Singapore Airlines" [ref=e3023]
+                - img "Singapore Airlines" [ref=e3024]
+              - generic [ref=e3025]: 1:15pm - 9:25am Fri Oct 30th 2026
+              - generic [ref=e3026]: 15h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3027]: 1 Stop
+            - button [ref=e3029] [cursor=pointer]:
+              - generic [ref=e3030]: 
+          - text:           
+        - listitem [ref=e3031]:
+          - generic [ref=e3032]:
+            - generic [ref=e3033]: ₺56629
+            - generic [ref=e3035]:
+              - generic [ref=e3036]:
+                - img "Gulf Air Bahrain" [ref=e3037]
+                - img "Gulf Air Bahrain" [ref=e3038]
+                - img "Vietnam Airlines" [ref=e3039]
+                - img "Vietnam Airlines" [ref=e3040]
+              - generic [ref=e3041]: 6:05am - 3:00pm Fri Oct 30th 2026
+              - generic [ref=e3042]: 27h 55m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3043]: 3 Stops
+            - button [ref=e3045] [cursor=pointer]:
+              - generic [ref=e3046]: 
+          - text:                     
+        - listitem [ref=e3047]:
+          - generic [ref=e3048]:
+            - generic [ref=e3049]: ₺57042
+            - generic [ref=e3051]:
+              - generic [ref=e3052]:
+                - img "Thai Airways" [ref=e3053]
+                - img "Thai Airways" [ref=e3054]
+              - generic [ref=e3055]: 4:30pm - 2:15pm Mon Oct 26th 2026
+              - generic [ref=e3056]: 16h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3057]: 1 Stop
+            - button [ref=e3059] [cursor=pointer]:
+              - generic [ref=e3060]: 
+          - text:           
+        - listitem [ref=e3061]:
+          - generic [ref=e3062]:
+            - generic [ref=e3063]: ₺57042
+            - generic [ref=e3065]:
+              - generic [ref=e3066]:
+                - img "Thai Airways" [ref=e3067]
+                - img "Thai Airways" [ref=e3068]
+              - generic [ref=e3069]: 4:30pm - 6:00pm Mon Oct 26th 2026
+              - generic [ref=e3070]: 20h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3071]: 1 Stop
+            - button [ref=e3073] [cursor=pointer]:
+              - generic [ref=e3074]: 
+          - text:           
+        - listitem [ref=e3075]:
+          - generic [ref=e3076]:
+            - generic [ref=e3077]: ₺57047
+            - generic [ref=e3079]:
+              - generic [ref=e3080]:
+                - img "Thai Airways" [ref=e3081]
+                - img "Thai Airways" [ref=e3082]
+              - generic [ref=e3083]: 4:30pm - 2:15pm Sun Oct 25th 2026
+              - generic [ref=e3084]: 16h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3085]: 1 Stop
+            - button [ref=e3087] [cursor=pointer]:
+              - generic [ref=e3088]: 
+          - text:           
+        - listitem [ref=e3089]:
+          - generic [ref=e3090]:
+            - generic [ref=e3091]: ₺57047
+            - generic [ref=e3093]:
+              - generic [ref=e3094]:
+                - img "Thai Airways" [ref=e3095]
+                - img "Thai Airways" [ref=e3096]
+              - generic [ref=e3097]: 4:30pm - 2:15pm Fri Oct 30th 2026
+              - generic [ref=e3098]: 16h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3099]: 1 Stop
+            - button [ref=e3101] [cursor=pointer]:
+              - generic [ref=e3102]: 
+          - text:           
+        - listitem [ref=e3103]:
+          - generic [ref=e3104]:
+            - generic [ref=e3105]: ₺57047
+            - generic [ref=e3107]:
+              - generic [ref=e3108]:
+                - img "Thai Airways" [ref=e3109]
+                - img "Thai Airways" [ref=e3110]
+              - generic [ref=e3111]: 4:30pm - 6:00pm Fri Oct 30th 2026
+              - generic [ref=e3112]: 20h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3113]: 1 Stop
+            - button [ref=e3115] [cursor=pointer]:
+              - generic [ref=e3116]: 
+          - text:           
+        - listitem [ref=e3117]:
+          - generic [ref=e3118]:
+            - generic [ref=e3119]: ₺57047
+            - generic [ref=e3121]:
+              - generic [ref=e3122]:
+                - img "Thai Airways" [ref=e3123]
+                - img "Thai Airways" [ref=e3124]
+              - generic [ref=e3125]: 4:30pm - 6:00pm Tue Oct 27th 2026
+              - generic [ref=e3126]: 20h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3127]: 1 Stop
+            - button [ref=e3129] [cursor=pointer]:
+              - generic [ref=e3130]: 
+          - text:           
+        - listitem [ref=e3131]:
+          - generic [ref=e3132]:
+            - generic [ref=e3133]: ₺57047
+            - generic [ref=e3135]:
+              - generic [ref=e3136]:
+                - img "Thai Airways" [ref=e3137]
+                - img "Thai Airways" [ref=e3138]
+              - generic [ref=e3139]: 4:30pm - 6:00pm Sun Oct 25th 2026
+              - generic [ref=e3140]: 20h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3141]: 1 Stop
+            - button [ref=e3143] [cursor=pointer]:
+              - generic [ref=e3144]: 
+          - text:           
+        - listitem [ref=e3145]:
+          - generic [ref=e3146]:
+            - generic [ref=e3147]: ₺57065
+            - generic [ref=e3149]:
+              - generic [ref=e3150]:
+                - img "Thai Airways" [ref=e3151]
+                - img "Thai Airways" [ref=e3152]
+              - generic [ref=e3153]: 4:30pm - 2:15pm Sat Oct 31st 2026
+              - generic [ref=e3154]: 16h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3155]: 1 Stop
+            - button [ref=e3157] [cursor=pointer]:
+              - generic [ref=e3158]: 
+          - text:           
+        - listitem [ref=e3159]:
+          - generic [ref=e3160]:
+            - generic [ref=e3161]: ₺57065
+            - generic [ref=e3163]:
+              - generic [ref=e3164]:
+                - img "Thai Airways" [ref=e3165]
+                - img "Thai Airways" [ref=e3166]
+              - generic [ref=e3167]: 4:30pm - 6:00pm Sat Oct 31st 2026
+              - generic [ref=e3168]: 20h 30m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3169]: 1 Stop
+            - button [ref=e3171] [cursor=pointer]:
+              - generic [ref=e3172]: 
+          - text:           
+        - listitem [ref=e3173]:
+          - generic [ref=e3174]:
+            - generic [ref=e3175]: ₺57318
+            - generic [ref=e3177]:
+              - img "Turkish Airlines" [ref=e3179]
+              - generic [ref=e3180]: 1:55am - 7:30pm Thu Oct 29th 2026
+              - generic [ref=e3181]: 12h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3182]: Direct
+            - button [ref=e3184] [cursor=pointer]:
+              - generic [ref=e3185]: 
+          - text:      
+        - listitem [ref=e3186]:
+          - generic [ref=e3187]:
+            - generic [ref=e3188]: ₺57318
+            - generic [ref=e3190]:
+              - img "Turkish Airlines" [ref=e3192]
+              - generic [ref=e3193]: 2:25am - 8:05pm Thu Oct 29th 2026
+              - generic [ref=e3194]: 12h 40m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3195]: Direct
+            - button [ref=e3197] [cursor=pointer]:
+              - generic [ref=e3198]: 
+          - text:      
+        - listitem [ref=e3199]:
+          - generic [ref=e3200]:
+            - generic [ref=e3201]: ₺57645
+            - generic [ref=e3203]:
+              - generic [ref=e3204]:
+                - img "Turkish Airlines" [ref=e3205]
+                - img "Scoot" [ref=e3206]
+              - generic [ref=e3207]: 6:30pm - 4:40pm Tue Oct 27th 2026
+              - generic [ref=e3208]: 17h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3209]: 1 Stop
+            - button [ref=e3211] [cursor=pointer]:
+              - generic [ref=e3212]: 
+          - text:           
+        - listitem [ref=e3213]:
+          - generic [ref=e3214]:
+            - generic [ref=e3215]: ₺57728
+            - generic [ref=e3217]:
+              - generic [ref=e3218]:
+                - img "Turkish Airlines" [ref=e3219]
+                - img "Scoot" [ref=e3220]
+              - generic [ref=e3221]: 5:15pm - 4:40pm Wed Oct 28th 2026
+              - generic [ref=e3222]: 18h 25m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3223]: 1 Stop
+            - button [ref=e3225] [cursor=pointer]:
+              - generic [ref=e3226]: 
+          - text:           
+        - listitem [ref=e3227]:
+          - generic [ref=e3228]:
+            - generic [ref=e3229]: ₺57757
+            - generic [ref=e3231]:
+              - img "Turkish Airlines" [ref=e3233]
+              - generic [ref=e3234]: 1:55am - 7:30pm Wed Oct 28th 2026
+              - generic [ref=e3235]: 12h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3236]: Direct
+            - button [ref=e3238] [cursor=pointer]:
+              - generic [ref=e3239]: 
+          - text:      
+        - listitem [ref=e3240]:
+          - generic [ref=e3241]:
+            - generic [ref=e3242]: ₺57783
+            - generic [ref=e3244]:
+              - img "Turkish Airlines" [ref=e3246]
+              - generic [ref=e3247]: 2:25am - 8:05pm Tue Oct 27th 2026
+              - generic [ref=e3248]: 12h 40m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3249]: Direct
+            - button [ref=e3251] [cursor=pointer]:
+              - generic [ref=e3252]: 
+          - text:      
+        - listitem [ref=e3253]:
+          - generic [ref=e3254]:
+            - generic [ref=e3255]: ₺57786
+            - generic [ref=e3257]:
+              - generic [ref=e3258]:
+                - img "Turkish Airlines" [ref=e3259]
+                - img "Scoot" [ref=e3260]
+              - generic [ref=e3261]: 5:15pm - 4:40pm Mon Oct 26th 2026
+              - generic [ref=e3262]: 18h 25m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3263]: 1 Stop
+            - button [ref=e3265] [cursor=pointer]:
+              - generic [ref=e3266]: 
+          - text:           
+        - listitem [ref=e3267]:
+          - generic [ref=e3268]:
+            - generic [ref=e3269]: ₺58229
+            - generic [ref=e3271]:
+              - img "Turkish Airlines" [ref=e3273]
+              - generic [ref=e3274]: 1:55am - 7:30pm Fri Oct 30th 2026
+              - generic [ref=e3275]: 12h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3276]: Direct
+            - button [ref=e3278] [cursor=pointer]:
+              - generic [ref=e3279]: 
+          - text:      
+        - listitem [ref=e3280]:
+          - generic [ref=e3281]:
+            - generic [ref=e3282]: ₺59056
+            - generic [ref=e3284]:
+              - generic [ref=e3285]:
+                - img "Air Arabia" [ref=e3286]
+                - img "Air Arabia" [ref=e3287]
+                - img "AirAsia" [ref=e3288]
+              - generic [ref=e3289]: 2:35pm - 6:50pm Fri Oct 30th 2026
+              - generic [ref=e3290]: 23h 15m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3291]: 2 Stops
+            - button [ref=e3293] [cursor=pointer]:
+              - generic [ref=e3294]: 
+          - text:                
+        - listitem [ref=e3295]:
+          - generic [ref=e3296]:
+            - generic [ref=e3297]: ₺59309
+            - generic [ref=e3299]:
+              - generic [ref=e3300]:
+                - img "IndiGo Airlines" [ref=e3301]
+                - img "IndiGo Airlines" [ref=e3302]
+                - img "Citilink" [ref=e3303]
+              - generic [ref=e3304]: 8:00pm - 7:35pm Mon Oct 26th 2026
+              - generic [ref=e3305]: 18h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3306]: 2 Stops
+            - button [ref=e3308] [cursor=pointer]:
+              - generic [ref=e3309]: 
+          - text:                
+        - listitem [ref=e3310]:
+          - generic [ref=e3311]:
+            - generic [ref=e3312]: ₺59400
+            - generic [ref=e3314]:
+              - generic [ref=e3315]:
+                - img "Singapore Airlines" [ref=e3316]
+                - img "Singapore Airlines" [ref=e3317]
+              - generic [ref=e3318]: 1:15pm - 9:25am Sat Oct 31st 2026
+              - generic [ref=e3319]: 15h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3320]: 1 Stop
+            - button [ref=e3322] [cursor=pointer]:
+              - generic [ref=e3323]: 
+          - text:           
+        - listitem [ref=e3324]:
+          - generic [ref=e3325]:
+            - generic [ref=e3326]: ₺59400
+            - generic [ref=e3328]:
+              - generic [ref=e3329]:
+                - img "Singapore Airlines" [ref=e3330]
+                - img "Singapore Airlines" [ref=e3331]
+              - generic [ref=e3332]: 1:15pm - 12:05pm Mon Oct 26th 2026
+              - generic [ref=e3333]: 17h 50m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3334]: 1 Stop
+            - button [ref=e3336] [cursor=pointer]:
+              - generic [ref=e3337]: 
+          - text:           
+        - listitem [ref=e3338]:
+          - generic [ref=e3339]:
+            - generic [ref=e3340]: ₺59495
+            - generic [ref=e3342]:
+              - generic [ref=e3343]:
+                - img "Turkish Airlines" [ref=e3344]
+                - img "TransNusa" [ref=e3345]
+              - generic [ref=e3346]: 5:15pm - 1:30pm Wed Oct 28th 2026
+              - generic [ref=e3347]: 15h 15m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3348]: 1 Stop
+            - button [ref=e3350] [cursor=pointer]:
+              - generic [ref=e3351]: 
+          - text:           
+        - listitem [ref=e3352]:
+          - generic [ref=e3353]:
+            - generic [ref=e3354]: ₺59511
+            - generic [ref=e3356]:
+              - generic [ref=e3357]:
+                - img "Air Arabia" [ref=e3358]
+                - img "Air Arabia" [ref=e3359]
+                - img "AirAsia" [ref=e3360]
+              - generic [ref=e3361]: 2:35pm - 6:50pm Mon Oct 26th 2026
+              - generic [ref=e3362]: 23h 15m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3363]: 2 Stops
+            - button [ref=e3365] [cursor=pointer]:
+              - generic [ref=e3366]: 
+          - text:                
+        - listitem [ref=e3367]:
+          - generic [ref=e3368]:
+            - generic [ref=e3369]: ₺59562
+            - generic [ref=e3371]:
+              - generic [ref=e3372]:
+                - img "Air Arabia" [ref=e3373]
+                - img "Air Arabia" [ref=e3374]
+                - img "AirAsia" [ref=e3375]
+              - generic [ref=e3376]: 2:35pm - 6:50pm Tue Oct 27th 2026
+              - generic [ref=e3377]: 23h 15m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3378]: 2 Stops
+            - button [ref=e3380] [cursor=pointer]:
+              - generic [ref=e3381]: 
+          - text:                
+        - listitem [ref=e3382]:
+          - generic [ref=e3383]:
+            - generic [ref=e3384]: ₺59562
+            - generic [ref=e3386]:
+              - generic [ref=e3387]:
+                - img "Air Arabia" [ref=e3388]
+                - img "Air Arabia" [ref=e3389]
+                - img "AirAsia" [ref=e3390]
+              - generic [ref=e3391]: 2:35pm - 6:50pm Wed Oct 28th 2026
+              - generic [ref=e3392]: 23h 15m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3393]: 2 Stops
+            - button [ref=e3395] [cursor=pointer]:
+              - generic [ref=e3396]: 
+          - text:                
+        - listitem [ref=e3397]:
+          - generic [ref=e3398]:
+            - generic [ref=e3399]: ₺59577
+            - generic [ref=e3401]:
+              - generic [ref=e3402]:
+                - img "Air Arabia" [ref=e3403]
+                - img "Air Arabia" [ref=e3404]
+                - img "AirAsia" [ref=e3405]
+              - generic [ref=e3406]: 2:35pm - 4:40pm Thu Oct 29th 2026
+              - generic [ref=e3407]: 21h 5m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3408]: 2 Stops
+            - button [ref=e3410] [cursor=pointer]:
+              - generic [ref=e3411]: 
+          - text:                
+        - listitem [ref=e3412]:
+          - generic [ref=e3413]:
+            - generic [ref=e3414]: ₺59631
+            - generic [ref=e3416]:
+              - generic [ref=e3417]:
+                - img "Turkish Airlines" [ref=e3418]
+                - img "TransNusa" [ref=e3419]
+              - generic [ref=e3420]: 5:15pm - 1:30pm Mon Oct 26th 2026
+              - generic [ref=e3421]: 15h 15m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3422]: 1 Stop
+            - button [ref=e3424] [cursor=pointer]:
+              - generic [ref=e3425]: 
+          - text:           
+        - listitem [ref=e3426]:
+          - generic [ref=e3427]:
+            - generic [ref=e3428]: ₺59746
+            - generic [ref=e3430]:
+              - img "Turkish Airlines" [ref=e3432]
+              - generic [ref=e3433]: 1:20am - 7:05pm Sun Oct 25th 2026
+              - generic [ref=e3434]: 12h 45m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3435]: Direct
+            - button [ref=e3437] [cursor=pointer]:
+              - generic [ref=e3438]: 
+          - text:      
+        - listitem [ref=e3439]:
+          - generic [ref=e3440]:
+            - generic [ref=e3441]: ₺60009
+            - generic [ref=e3443]:
+              - generic [ref=e3444]:
+                - img "Air Arabia" [ref=e3445]
+                - img "Air Arabia" [ref=e3446]
+                - img "AirAsia" [ref=e3447]
+              - generic [ref=e3448]: 2:35pm - 2:55pm Sat Oct 31st 2026
+              - generic [ref=e3449]: 19h 20m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3450]: 2 Stops
+            - button [ref=e3452] [cursor=pointer]:
+              - generic [ref=e3453]: 
+          - text:                
+        - listitem [ref=e3454]:
+          - generic [ref=e3455]:
+            - generic [ref=e3456]: ₺60009
+            - generic [ref=e3458]:
+              - generic [ref=e3459]:
+                - img "Air Arabia" [ref=e3460]
+                - img "Air Arabia" [ref=e3461]
+                - img "AirAsia" [ref=e3462]
+              - generic [ref=e3463]: 2:35pm - 4:10pm Sat Oct 31st 2026
+              - generic [ref=e3464]: 20h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3465]: 2 Stops
+            - button [ref=e3467] [cursor=pointer]:
+              - generic [ref=e3468]: 
+          - text:                
+        - listitem [ref=e3469]:
+          - generic [ref=e3470]:
+            - generic [ref=e3471]: ₺60223
+            - generic [ref=e3473]:
+              - generic [ref=e3474]:
+                - img "Air Arabia" [ref=e3475]
+                - img "Air Arabia" [ref=e3476]
+                - img "AirAsia" [ref=e3477]
+              - generic [ref=e3478]: 2:35pm - 2:55pm Fri Oct 30th 2026
+              - generic [ref=e3479]: 19h 20m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3480]: 2 Stops
+            - button [ref=e3482] [cursor=pointer]:
+              - generic [ref=e3483]: 
+          - text:                
+        - listitem [ref=e3484]:
+          - generic [ref=e3485]:
+            - generic [ref=e3486]: ₺60260
+            - generic [ref=e3488]:
+              - img "Turkish Airlines" [ref=e3490]
+              - generic [ref=e3491]: 1:55am - 7:30pm Tue Oct 27th 2026
+              - generic [ref=e3492]: 12h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3493]: Direct
+            - button [ref=e3495] [cursor=pointer]:
+              - generic [ref=e3496]: 
+          - text:      
+        - listitem [ref=e3497]:
+          - generic [ref=e3498]:
+            - generic [ref=e3499]: ₺60467
+            - generic [ref=e3501]:
+              - generic [ref=e3502]:
+                - img "Singapore Airlines" [ref=e3503]
+                - img "Singapore Airlines" [ref=e3504]
+              - generic [ref=e3505]: 1:15pm - 10:10am Mon Oct 26th 2026
+              - generic [ref=e3506]: 15h 55m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3507]: 1 Stop
+            - button [ref=e3509] [cursor=pointer]:
+              - generic [ref=e3510]: 
+          - text:           
+        - listitem [ref=e3511]:
+          - generic [ref=e3512]:
+            - generic [ref=e3513]: ₺60500
+            - generic [ref=e3515]:
+              - generic [ref=e3516]:
+                - img "Singapore Airlines" [ref=e3517]
+                - img "Singapore Airlines" [ref=e3518]
+              - generic [ref=e3519]: 1:15pm - 10:10am Sat Oct 31st 2026
+              - generic [ref=e3520]: 15h 55m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3521]: 1 Stop
+            - button [ref=e3523] [cursor=pointer]:
+              - generic [ref=e3524]: 
+          - text:           
+        - listitem [ref=e3525]:
+          - generic [ref=e3526]:
+            - generic [ref=e3527]: ₺60659
+            - generic [ref=e3529]:
+              - generic [ref=e3530]:
+                - img "Turkish Airlines" [ref=e3531]
+                - img "Scoot" [ref=e3532]
+              - generic [ref=e3533]: 6:30pm - 4:40pm Sun Oct 25th 2026
+              - generic [ref=e3534]: 17h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3535]: 1 Stop
+            - button [ref=e3537] [cursor=pointer]:
+              - generic [ref=e3538]: 
+          - text:           
+        - listitem [ref=e3539]:
+          - generic [ref=e3540]:
+            - generic [ref=e3541]: ₺60678
+            - generic [ref=e3543]:
+              - generic [ref=e3544]:
+                - img "Air Arabia" [ref=e3545]
+                - img "Air Arabia" [ref=e3546]
+                - img "AirAsia" [ref=e3547]
+              - generic [ref=e3548]: 2:35pm - 2:55pm Mon Oct 26th 2026
+              - generic [ref=e3549]: 19h 20m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3550]: 2 Stops
+            - button [ref=e3552] [cursor=pointer]:
+              - generic [ref=e3553]: 
+          - text:                
+        - listitem [ref=e3554]:
+          - generic [ref=e3555]:
+            - generic [ref=e3556]: ₺60714
+            - generic [ref=e3558]:
+              - generic [ref=e3559]:
+                - img "Air Arabia" [ref=e3560]
+                - img "Air Arabia" [ref=e3561]
+                - img "AirAsia" [ref=e3562]
+              - generic [ref=e3563]: 2:35pm - 2:55pm Tue Oct 27th 2026
+              - generic [ref=e3564]: 19h 20m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3565]: 2 Stops
+            - button [ref=e3567] [cursor=pointer]:
+              - generic [ref=e3568]: 
+          - text:                
+        - listitem [ref=e3569]:
+          - generic [ref=e3570]:
+            - generic [ref=e3571]: ₺61555
+            - generic [ref=e3573]:
+              - generic [ref=e3574]:
+                - img "Singapore Airlines" [ref=e3575]
+                - img "Singapore Airlines" [ref=e3576]
+              - generic [ref=e3577]: 1:15pm - 9:25am Mon Oct 26th 2026
+              - generic [ref=e3578]: 15h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3579]: 1 Stop
+            - button [ref=e3581] [cursor=pointer]:
+              - generic [ref=e3582]: 
+          - text:           
+        - listitem [ref=e3583]:
+          - generic [ref=e3584]:
+            - generic [ref=e3585]: ₺61847
+            - generic [ref=e3587]:
+              - generic [ref=e3588]:
+                - img "Air Arabia" [ref=e3589]
+                - img "Air Arabia" [ref=e3590]
+                - img "AirAsia" [ref=e3591]
+              - generic [ref=e3592]: 2:35pm - 2:55pm Wed Oct 28th 2026
+              - generic [ref=e3593]: 19h 20m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3594]: 2 Stops
+            - button [ref=e3596] [cursor=pointer]:
+              - generic [ref=e3597]: 
+          - text:                
+        - listitem [ref=e3598]:
+          - generic [ref=e3599]:
+            - generic [ref=e3600]: ₺62382
+            - generic [ref=e3602]:
+              - generic [ref=e3603]:
+                - img "Turkish Airlines" [ref=e3604]
+                - img "AirAsia" [ref=e3605]
+              - generic [ref=e3606]: 5:15pm - 2:55pm Tue Oct 27th 2026
+              - generic [ref=e3607]: 16h 40m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3608]: 1 Stop
+            - button [ref=e3610] [cursor=pointer]:
+              - generic [ref=e3611]: 
+          - text:           
+        - listitem [ref=e3612]:
+          - generic [ref=e3613]:
+            - generic [ref=e3614]: ₺64344
+            - generic [ref=e3616]:
+              - generic [ref=e3617]:
+                - img "Air Arabia" [ref=e3618]
+                - img "Air Arabia" [ref=e3619]
+                - img "AirAsia" [ref=e3620]
+              - generic [ref=e3621]: 2:35pm - 2:55pm Thu Oct 29th 2026
+              - generic [ref=e3622]: 19h 20m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3623]: 2 Stops
+            - button [ref=e3625] [cursor=pointer]:
+              - generic [ref=e3626]: 
+          - text:                
+        - listitem [ref=e3627]:
+          - generic [ref=e3628]:
+            - generic [ref=e3629]: ₺65020
+            - generic [ref=e3631]:
+              - generic [ref=e3632]:
+                - img "Garuda Indonesia" [ref=e3633]
+                - img "Garuda Indonesia" [ref=e3634]
+              - generic [ref=e3635]: 2:20am - 12:20am Sat Oct 31st 2026
+              - generic [ref=e3636]: 17h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3637]: 1 Stop
+            - button [ref=e3639] [cursor=pointer]:
+              - generic [ref=e3640]: 
+          - text:           
+        - listitem [ref=e3641]:
+          - generic [ref=e3642]:
+            - generic [ref=e3643]: ₺66302
+            - generic [ref=e3645]:
+              - img "Turkish Airlines" [ref=e3647]
+              - generic [ref=e3648]: 1:55am - 7:30pm Sat Oct 31st 2026
+              - generic [ref=e3649]: 12h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3650]: Direct
+            - button [ref=e3652] [cursor=pointer]:
+              - generic [ref=e3653]: 
+          - text:      
+        - listitem [ref=e3654]:
+          - generic [ref=e3655]:
+            - generic [ref=e3656]: ₺66350
+            - generic [ref=e3658]:
+              - generic [ref=e3659]:
+                - img "Turkish Airlines" [ref=e3660]
+                - img "Indonesia AirAsia" [ref=e3661]
+              - generic [ref=e3662]: 2:00am - 11:10pm Wed Oct 28th 2026
+              - generic [ref=e3663]: 16h 10m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3664]: 1 Stop
+            - button [ref=e3666] [cursor=pointer]:
+              - generic [ref=e3667]: 
+          - text:           
+        - listitem [ref=e3668]:
+          - generic [ref=e3669]:
+            - generic [ref=e3670]: ₺66942
+            - generic [ref=e3672]:
+              - generic [ref=e3673]:
+                - img "Oman Air" [ref=e3674]
+                - img "Oman Air" [ref=e3675]
+                - img "Indonesia AirAsia" [ref=e3676]
+              - generic [ref=e3677]: 6:30pm - 6:30pm Fri Oct 30th 2026
+              - generic [ref=e3678]: 19h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3679]: 2 Stops
+            - button [ref=e3681] [cursor=pointer]:
+              - generic [ref=e3682]: 
+          - text:                
+        - listitem [ref=e3683]:
+          - generic [ref=e3684]:
+            - generic [ref=e3685]: ₺66942
+            - generic [ref=e3687]:
+              - generic [ref=e3688]:
+                - img "Oman Air" [ref=e3689]
+                - img "Oman Air" [ref=e3690]
+                - img "Indonesia AirAsia" [ref=e3691]
+              - generic [ref=e3692]: 6:30pm - 6:30pm Thu Oct 29th 2026
+              - generic [ref=e3693]: 19h 0m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3694]: 2 Stops
+            - button [ref=e3696] [cursor=pointer]:
+              - generic [ref=e3697]: 
+          - text:                
+        - listitem [ref=e3698]:
+          - generic [ref=e3699]:
+            - generic [ref=e3700]: ₺68693
+            - generic [ref=e3702]:
+              - img "Turkish Airlines" [ref=e3704]
+              - generic [ref=e3705]: 1:55am - 7:30pm Mon Oct 26th 2026
+              - generic [ref=e3706]: 12h 35m Istanbul (IST) → Denpasar (DPS)
+              - generic [ref=e3707]: Direct
+            - button [ref=e3709] [cursor=pointer]:
+              - generic [ref=e3710]: 
+          - text:      
+  - generic [ref=e1379]:
+    - generic [ref=e1380]:
+      - generic [ref=e1382]:
+        - generic [ref=e1383]:
+          - generic [ref=e1384]:
+            - img "@carlisimoni" [ref=e1385]
+            - generic [ref=e1386]:
+              - heading [level=6] [ref=e1387]:
+                - link "Carli Simoni" [ref=e1388] [cursor=pointer]:
+                  - /url: https://www.instagram.com/carlisimoni/
+              - text: "@carlisimoni"
+          - generic [ref=e1389]: 
+        - paragraph [ref=e1390]: "@flightlistio mejores opciones de vuelos y mejor que cualquier otro sitio web de vuelos 10/10."
+      - generic [ref=e1392]:
+        - generic [ref=e1393]:
+          - generic [ref=e1394]:
+            - img "@sarahbb1" [ref=e1395]
+            - generic [ref=e1396]:
+              - heading [level=6] [ref=e1397]:
+                - link "Sarah Belizaire" [ref=e1398] [cursor=pointer]:
+                  - /url: https://twitter.com/sarahbb1/status/1293651193718353920
+              - text: "@sarahbb1"
+          - generic [ref=e1399]: 
+        - paragraph [ref=e1400]: "Have flexible travel plans or looking for alternative routes given the chaos? Check out all the connection possibilities via a super helpful site created by @ismaelyws flightlist.io thanks to @andy_travels for the recommendation #travel #flights"
+      - generic [ref=e1402]:
+        - generic [ref=e1403]:
+          - generic [ref=e1404]:
+            - img "@eyupitsjohn" [ref=e1405]
+            - generic [ref=e1406]:
+              - heading [level=6] [ref=e1407]:
+                - link "John Ford" [ref=e1408] [cursor=pointer]:
+                  - /url: https://twitter.com/eyupitsjohn/status/965719288844836865
+              - text: "@eyupitsjohn"
+          - generic [ref=e1409]: 
+        - paragraph [ref=e1410]: "There seem to be lots of sites launching at the moment that promise to find you cheap flights but not many have the professional finish of Flightlist by @ismaelyws #travel #flights"
+      - generic [ref=e1411]:
+        - generic [ref=e1412]:
+          - generic [ref=e1413]:
+            - generic [ref=e1414]:
+              - img "@oamingsonaa" [ref=e1415]
+              - generic [ref=e1416]:
+                - heading [level=6] [ref=e1417]:
+                  - link "Roaming Sonaa" [ref=e1418] [cursor=pointer]:
+                    - /url: https://www.instagram.com/roamingsonaa/
+                - text: "@roamingsonaa"
+            - generic [ref=e1419]: 
+          - paragraph [ref=e1420]: For people wanting to maximize their trips, Flightlist is my newest travel hack for uncovering the coolest routes at irresistible prices. No stress, no annoying ads — just seamless flight booking with amazing functionality. It's designed for remote workers, backpackers, and people living abroad.
+        - generic [ref=e1421]:
+          - text: Read Sonaa's
+          - link "7 Amazing Skyscanner Alternatives for Booking Travel" [ref=e1422] [cursor=pointer]:
+            - /url: https://roamingsonaa.com/skyscanner-alternatives/
+    - generic [ref=e1423]:
+      - generic [ref=e1425]:
+        - generic [ref=e1426]:
+          - generic [ref=e1427]:
+            - img "@melophi" [ref=e1428]
+            - generic [ref=e1429]:
+              - heading [level=6] [ref=e1430]:
+                - link "Melophi" [ref=e1431] [cursor=pointer]:
+                  - /url: https://www.instagram.com/p/C86bb5AOwPb/
+              - text: "@melophi"
+          - generic [ref=e1432]: 
+        - paragraph [ref=e1433]: A little bit of research on flightlist.io is how we always find the best total price and also see more of the world with less effort!
+      - generic [ref=e1435]:
+        - generic [ref=e1436]:
+          - generic [ref=e1437]:
+            - img "@andy_travels" [ref=e1438]
+            - generic [ref=e1439]:
+              - heading [level=6] [ref=e1440]:
+                - link "Andy Travels" [ref=e1441] [cursor=pointer]:
+                  - /url: https://twitter.com/andy_travels/status/1279392432581423108
+              - text: "@andy_travels"
+          - generic [ref=e1442]: 
+        - paragraph [ref=e1443]: "@ismaelyws Just tried out Flightlist for the first time. Really nice idea, well made, and just what I need at the moment 👍"
+      - generic [ref=e1444]:
+        - generic [ref=e1445]:
+          - generic [ref=e1446]:
+            - generic [ref=e1447]:
+              - img "@travelwitbender" [ref=e1448]
+              - generic [ref=e1449]:
+                - heading [level=6] [ref=e1450]:
+                  - link "Travel With Bender" [ref=e1451] [cursor=pointer]:
+                    - /url: https://twitter.com/TravelwitBender/status/1081367527110787073
+                - text: "@travelwitbender"
+            - generic [ref=e1452]: 
+          - paragraph [ref=e1453]: Did you spot my recent article about how to score cheap one way flights? ✈️ FlightList is my new secret tool for discovering cheap routes, within a departure date range. Plus you can also search by country/region for departures & destinations. Powerful! 💪
+        - generic [ref=e1454]:
+          - text: Read Josh's
+          - link "Ultimate Guide To Find Cheap One Way Flights" [ref=e1455] [cursor=pointer]:
+            - /url: https://travelwithbender.com/travel-thoughts/travel-tips/cheap-one-way-flights
+      - generic [ref=e1456]:
+        - generic [ref=e1457]:
+          - generic [ref=e1458]:
+            - generic [ref=e1459]:
+              - img "@travel.with.wes" [ref=e1460]
+              - generic [ref=e1461]:
+                - heading [level=6] [ref=e1462]:
+                  - link "Wesley Mergard" [ref=e1463] [cursor=pointer]:
+                    - /url: https://www.instagram.com/travel.with.wes/
+                - text: "@travel.with.wes"
+            - generic [ref=e1464]: 
+          - paragraph [ref=e1465]: One useful tool I've found for evaluating different departure and return dates is called FlightList.io. You can quickly scan different travel date ranges, carriers and one way flight options to easily determine the cheapest flight combinations for your trip.
+        - generic [ref=e1466]:
+          - text: Read Wesley's
+          - link "My Best Cheap Flight Hacks (Why Pay More?)" [ref=e1467] [cursor=pointer]:
+            - /url: https://www.workremotelyliveremotely.com/post/best-cheap-flight-hacks
+  - generic [ref=e1470]:
+    - heading "Explore Cheap Flights" [level=2] [ref=e1472]
+    - generic [ref=e1475]:
+      - list [ref=e1477]:
+        - listitem [ref=e1478]:
+          - link "Flights from Turkey" [ref=e1479] [cursor=pointer]:
+            - /url: /flights/turkey/
+        - listitem [ref=e1480]:
+          - link "Flights from Germany" [ref=e1481] [cursor=pointer]:
+            - /url: /flights/germany/
+        - listitem [ref=e1482]:
+          - link "Flights from the Netherlands" [ref=e1483] [cursor=pointer]:
+            - /url: /flights/netherlands/
+        - listitem [ref=e1484]:
+          - link "Flights from the United States" [ref=e1485] [cursor=pointer]:
+            - /url: /flights/united-states-of-america/
+        - listitem [ref=e1486]:
+          - link "Flights from the United Kingdom" [ref=e1487] [cursor=pointer]:
+            - /url: /flights/united-kingdom/
+        - listitem [ref=e1488]:
+          - link "Flights from Spain" [ref=e1489] [cursor=pointer]:
+            - /url: /flights/spain/
+        - listitem [ref=e1490]:
+          - link "Flights from Azerbaijan" [ref=e1491] [cursor=pointer]:
+            - /url: /flights/azerbaijan/
+      - list [ref=e1493]:
+        - listitem [ref=e1494]:
+          - link "Flights from Poland" [ref=e1495] [cursor=pointer]:
+            - /url: /flights/poland/
+        - listitem [ref=e1496]:
+          - link "Flights from Italy" [ref=e1497] [cursor=pointer]:
+            - /url: /flights/italy/
+        - listitem [ref=e1498]:
+          - link "Flights from Canada" [ref=e1499] [cursor=pointer]:
+            - /url: /flights/canada/
+        - listitem [ref=e1500]:
+          - link "Flights from Belgium" [ref=e1501] [cursor=pointer]:
+            - /url: /flights/belgium/
+        - listitem [ref=e1502]:
+          - link "Flights from Austria" [ref=e1503] [cursor=pointer]:
+            - /url: /flights/austria/
+        - listitem [ref=e1504]:
+          - link "Flights from Switzerland" [ref=e1505] [cursor=pointer]:
+            - /url: /flights/switzerland/
+        - listitem [ref=e1506]:
+          - link "Flights from Sweden" [ref=e1507] [cursor=pointer]:
+            - /url: /flights/sweden/
+      - list [ref=e1509]:
+        - listitem [ref=e1510]:
+          - link "Flights from Australia" [ref=e1511] [cursor=pointer]:
+            - /url: /flights/australia/
+        - listitem [ref=e1512]:
+          - link "Flights from Portugal" [ref=e1513] [cursor=pointer]:
+            - /url: /flights/portugal/
+        - listitem [ref=e1514]:
+          - link "Flights from Norway" [ref=e1515] [cursor=pointer]:
+            - /url: /flights/norway/
+        - listitem [ref=e1516]:
+          - link "Flights from Finland" [ref=e1517] [cursor=pointer]:
+            - /url: /flights/finland/
+        - listitem [ref=e1518]:
+          - link "Flights from Ireland" [ref=e1519] [cursor=pointer]:
+            - /url: /flights/ireland/
+        - listitem [ref=e1520]:
+          - link "Flights from Denmark" [ref=e1521] [cursor=pointer]:
+            - /url: /flights/denmark/
+        - listitem [ref=e1522]:
+          - link [ref=e1523] [cursor=pointer]:
+            - /url: /flights/
+            - strong [ref=e1524]: Explore all cheap flights
+  - generic [ref=e1527]:
+    - heading "FlightList Blog" [level=2] [ref=e1529]
+    - generic [ref=e1532]:
+      - generic "What the Fuel Crisis Means for Cheap Flights" [ref=e1533]
+      - heading [level=5] [ref=e1535]:
+        - link "What the Fuel Crisis Means for Cheap Flights" [ref=e1536] [cursor=pointer]:
+          - /url: what-the-fuel-crisis-means-for-cheap-flights.php
+    - generic [ref=e1539]:
+      - generic "The Golden Age of Cheap Flights Is Here, But It's Changing Fast" [ref=e1540]
+      - heading [level=5] [ref=e1542]:
+        - link "The Golden Age of Cheap Flights Is Here, But It's Changing Fast" [ref=e1543] [cursor=pointer]:
+          - /url: the-golden-age-of-cheap-flights-is-here-but-its-changing-fast.php
+  - generic [ref=e1546]:
+    - heading "How to Find Cheap Flights" [level=2] [ref=e1548]
+    - generic [ref=e1550]:
+      - generic [ref=e1552]:
+        - heading "Search by Date Range" [level=3] [ref=e1553]
+        - paragraph [ref=e1554]: Most flight search engines force you to pick a single date. FlightList lets you search across a range of dates so you can compare prices at a glance and find the cheapest flights available. Even a one-day shift can save you hundreds.
+      - generic [ref=e1556]:
+        - heading "Search by Country or Region" [level=3] [ref=e1557]
+        - paragraph [ref=e1558]: Not set on a specific airport? Search by country or entire region — like Europe or South East Asia — to discover cheaper routes you didn't know existed. This is how flexible travelers consistently find the cheapest flights to anywhere.
+      - generic [ref=e1560]:
+        - heading "Compare One-Way vs Round-Trip" [level=3] [ref=e1561]
+        - paragraph [ref=e1562]: Booking two separate one-way flights is often cheaper than a round-trip ticket. FlightList supports both, so you can compare and pick whichever option gives you the lowest total price and the most flexibility.
+      - generic [ref=e1564]:
+        - heading "Use Filters to Narrow Results" [level=3] [ref=e1565]
+        - paragraph [ref=e1566]: Set a maximum budget, choose direct flights only, filter by airline, limit layover time or select your preferred cabin class. The more specific your filters, the faster you'll find cheap flights that match your travel style.
+      - generic [ref=e1568]:
+        - heading "Be Flexible on Departure Day" [level=3] [ref=e1569]
+        - paragraph [ref=e1570]: Flight prices vary dramatically by day of the week. Fridays and mid-week departures tend to be cheapest. Use a wider date range in your search and sort by lowest price to spot the cheapest flights across the entire window.
+      - generic [ref=e1572]:
+        - heading "Book at the Right Time" [level=3] [ref=e1573]
+        - paragraph [ref=e1574]: For domestic flights, booking 1-3 months ahead typically gets you the best fares. For international, aim for 2-6 months out. Searching too early or too late means you'll rarely find the cheapest flights available.
+  - generic [ref=e1577]:
+    - heading "Cheap Flights — Frequently Asked Questions" [level=2] [ref=e1579]
+    - generic [ref=e1581]:
+      - heading "How do I find the cheapest flights?" [level=3] [ref=e1582]
+      - paragraph [ref=e1583]: The best way to find cheap flights is to stay flexible on your dates and destination. Use FlightList to search across a date range instead of a single day, and search by country or region to uncover routes you might not have considered. Comparing one-way fares from different airlines often reveals lower prices than a traditional round-trip booking.
+      - heading "Is it cheaper to book one-way or round-trip flights?" [level=3] [ref=e1584]
+      - paragraph [ref=e1585]: It depends on the route and airline, but booking two one-way flights is often cheaper than a round-trip — especially when you mix airlines for each leg. Budget carriers like Ryanair, EasyJet and Southwest price their flights as one-way by default, so you can combine the cheapest outbound with the cheapest return for a lower total cost.
+      - heading "When is the best time to book cheap flights?" [level=3] [ref=e1586]
+      - paragraph [ref=e1587]: For domestic flights, the sweet spot is 1 to 3 months before departure. For international flights, aim for 2 to 6 months ahead. Booking too far in advance or at the last minute typically results in higher fares. Use a date range search to compare prices across several weeks and find the cheapest departure date.
+      - heading "What day of the week has the cheapest flights?" [level=3] [ref=e1588]
+      - paragraph [ref=e1589]: Flight prices fluctuate by day, but Fridays and mid-week days (Tuesday, Wednesday) tend to have the lowest fares due to reduced business travel demand. The cheapest day varies by route, so searching a full week at once on FlightList lets you spot the best deal quickly.
+      - heading "How do I find cheap flights to anywhere?" [level=3] [ref=e1590]
+      - paragraph [ref=e1591]: On FlightList, enter your departure city and leave the destination open or set it to an entire region like Europe, Asia, or South America. Sort results by lowest price and you'll see the cheapest flights available from your location across all destinations. This is how digital nomads and flexible travelers discover affordable routes they wouldn't have found otherwise.
+  - generic [ref=e1594]:
+    - separator [ref=e1596]
+    - paragraph [ref=e1598]: © 2018-2026 Inventure. All rights reserved.
+    - paragraph [ref=e1600]:
+      - link "Privacy Policy" [ref=e1601] [cursor=pointer]:
+        - /url: privacy.php
