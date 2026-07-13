@@ -33,7 +33,7 @@ data:
           "type": "barchart",
           "title": "${route} — cheapest fare by departure day (TRY, 2 adults)",
           "gridPos": { "h": 10, "w": 24, "x": 0, "y": 0 },
-          "fieldConfig": { "defaults": { "unit": "currencyTRY", "decimals": 0 } },
+          "fieldConfig": { "defaults": { "unit": "suffix: ₺", "decimals": 0 } },
           "options": { "xField": "day", "orientation": "auto", "showValue": "auto", "xTickLabelRotation": -45, "xTickLabelSpacing": 100 },
           "targets": [
             {
@@ -47,7 +47,7 @@ data:
           "type": "stat",
           "title": "Cheapest fare now (TRY, 2 adults)",
           "gridPos": { "h": 6, "w": 8, "x": 0, "y": 10 },
-          "fieldConfig": { "defaults": { "unit": "currencyTRY", "decimals": 0 } },
+          "fieldConfig": { "defaults": { "unit": "suffix: ₺", "decimals": 0 } },
           "targets": [
             {
               "refId": "A",
@@ -60,7 +60,7 @@ data:
           "type": "stat",
           "title": "Cheapest now (EUR @ ${try_per_eur})",
           "gridPos": { "h": 6, "w": 8, "x": 8, "y": 10 },
-          "fieldConfig": { "defaults": { "unit": "currencyEUR", "decimals": 0 } },
+          "fieldConfig": { "defaults": { "unit": "prefix: €", "decimals": 0 } },
           "targets": [
             {
               "refId": "A",
@@ -87,7 +87,7 @@ data:
           "title": "${route} — cheapest-fare trend by departure day (TRY, 2 adults)",
           "gridPos": { "h": 10, "w": 24, "x": 0, "y": 16 },
           "fieldConfig": {
-            "defaults": { "unit": "currencyTRY", "custom": { "drawStyle": "line", "showPoints": "auto", "spanNulls": true } },
+            "defaults": { "unit": "suffix: ₺", "custom": { "drawStyle": "line", "showPoints": "auto", "spanNulls": true } },
             "overrides": [ { "matcher": { "id": "byFrameRefID", "options": "A" }, "properties": [ { "id": "displayName", "value": "${__field.labels.depart_date}" } ] } ]
           },
           "options": { "legend": { "displayMode": "table", "placement": "right", "calcs": ["last", "min"] } },

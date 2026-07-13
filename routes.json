@@ -23,6 +23,16 @@
       "fly_to": "city:ANK",
       "max_stopovers": 2,
       "date_range": { "start": "2026-08-01", "end": "2026-08-31" }
+    },
+    {
+      "id": "ESB-DPS",
+      "origin": "ESB",
+      "destination": "DPS",
+      "trip": "one-way",
+      "fly_from": "city:ANK",
+      "fly_to": "city:DPS",
+      "max_stopovers": 4,
+      "date_range": { "start": "2026-10-24", "end": "2026-11-01" }
     }
   ]
 }
