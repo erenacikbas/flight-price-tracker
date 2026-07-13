@@ -25,8 +25,8 @@ spec:
                 - { name: ROUTES_PATH, value: /config/routes.json }
                 - name: INFLUXDB_TOKEN
                   valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: influxdb-token } }
-                - name: DUFFEL_TOKEN
-                  valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: duffel-token } }
+                - name: TRAVELPAYOUTS_TOKEN
+                  valueFrom: { secretKeyRef: { name: flight-tracker-secrets, key: travelpayouts-token } }
               volumeMounts:
                 - { name: routes, mountPath: /config }
               resources:

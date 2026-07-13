@@ -2,38 +2,34 @@ from datetime import datetime, timezone
 import logger
 
 NOW = datetime(2026, 7, 12, 18, 0, tzinfo=timezone.utc)
+CFG = {"currency": "try", "marker": "750309",
+       "routes": [{"id": "IST-DPS", "origin": "IST", "destination": "DPS", "trip": "one-way",
+                   "date_range": {"start": "2026-10-24", "end": "2026-11-01"}}]}
 
 
-def test_route_dates_from_range():
-    dates = logger.route_dates({"date_range": {"start": "2026-10-24", "end": "2026-10-27"}})
-    assert dates == ["2026-10-24", "2026-10-25", "2026-10-26", "2026-10-27"]
+def test_dates_in_window():
+    w = logger.dates_in_window({"date_range": {"start": "2026-10-30", "end": "2026-11-01"}})
+    assert w == {"2026-10-30", "2026-10-31", "2026-11-01"}
 
 
-def test_route_dates_explicit_list_and_single():
-    assert logger.route_dates({"depart_dates": ["2026-10-26"]}) == ["2026-10-26"]
-    assert logger.route_dates({"depart_date": "2026-10-26"}) == ["2026-10-26"]
+def test_collect_keeps_only_in_window_dates():
+    def fetch(origin, destination, cfg):
+        return {
+            "2026-07-13": {"price": 41005, "airline": "IndiGo", "stops": 2},   # out of window
+            "2026-10-27": {"price": 39249, "airline": "Air Arabia", "stops": 2},
+            "2026-10-30": {"price": 34255, "airline": "AirAsia X", "stops": 1},
+        }
+    records, hard = logger.collect(CFG, fetch=fetch, now=NOW)
+    assert hard == 0
+    assert {r.tags["depart_date"] for r in records} == {"2026-10-27", "2026-10-30"}
 
 
-CFG = {"cabin": "economy",
-       "routes": [{"id": "IST-DPS", "origin": "IST", "destination": "DPS",
-                   "date_range": {"start": "2026-10-24", "end": "2026-10-25"}}]}
-
-
-def test_collect_records_per_date_and_airline():
-    def fetch(origin, destination, d, cfg):
-        return {"Qatar Airways": {"airline": "Qatar Airways", "price": 500.0, "currency": "EUR"},
-                "THAI": {"airline": "THAI", "price": 480.0, "currency": "EUR"}}
-    records, hard_failures = logger.collect(CFG, fetch=fetch, now=NOW)
-    assert hard_failures == 0
-    assert len(records) == 4  # 2 dates x 2 airlines
-    assert {r.tags["depart_date"] for r in records} == {"2026-10-24", "2026-10-25"}
-
-
-def test_collect_hard_failure_on_empty_and_error():
-    records, hf = logger.collect(CFG, fetch=lambda *a, **k: {}, now=NOW)
-    assert records == [] and hf == 2  # both dates empty
-
+def test_collect_hard_failure_on_error_but_not_on_empty_window():
+    # fetch error -> hard failure
     def boom(*a, **k):
-        raise RuntimeError("duffel down")
-    records2, hf2 = logger.collect(CFG, fetch=boom, now=NOW)
-    assert records2 == [] and hf2 == 2
+        raise RuntimeError("travelpayouts down")
+    _, hf = logger.collect(CFG, fetch=boom, now=NOW)
+    assert hf == 1
+    # no dates in window is NOT a hard failure (just sparse cache)
+    recs, hf2 = logger.collect(CFG, fetch=lambda *a, **k: {"2026-07-13": {"price": 1, "airline": "X", "stops": 0}}, now=NOW)
+    assert recs == [] and hf2 == 0

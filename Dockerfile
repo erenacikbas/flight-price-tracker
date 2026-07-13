@@ -1,6 +1,8 @@
 FROM python:3.11-slim
 WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY records.py duffel_fetch.py influx_writer.py logger.py routes.json ./
+COPY records.py travelpayouts_fetch.py influx_writer.py logger.py routes.json ./
 ENTRYPOINT ["python", "logger.py"]

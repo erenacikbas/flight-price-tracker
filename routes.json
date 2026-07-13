@@ -1,5 +1,6 @@
 {
-  "cabin": "economy",
+  "currency": "try",
+  "marker": "750309",
   "adults": 1,
   "routes": [
     {

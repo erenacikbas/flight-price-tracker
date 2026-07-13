@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Flight price logger: fetch cheapest offer per airline per departure date (Duffel).
+"""Flight price logger: cheapest fare per departure date (Travelpayouts) -> InfluxDB.
 
-Runs as a Kubernetes CronJob every 15 minutes. For each route, sweeps a range of
-departure dates and writes one point per (route, date, airline) to InfluxDB.
-Exit codes: 0 = ok, 2 = hard failure (a date returned no offers / errored), 1 = unexpected.
+Runs as a Kubernetes CronJob every 15 minutes. One /v1/prices/calendar call per
+route returns the cheapest fare per day; we keep the dates inside the configured
+window and write one point per (route, depart_date).
+Exit codes: 0 = ok, 2 = hard failure (a route errored or returned no dates in range).
 """
 import json
 import os
 import sys
 from datetime import datetime, timezone, date, timedelta
 
-from duffel_fetch import fetch_date
-from records import airline_to_record
+from travelpayouts_fetch import fetch_calendar
+from records import date_to_record
 from influx_writer import influx_config_from_env, write_records
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -23,42 +24,39 @@ def load_config(path=CONFIG_PATH) -> dict:
         return json.load(f)
 
 
-def route_dates(route: dict) -> list:
-    """Explicit list (depart_dates), a range (date_range: {start,end}), or single depart_date."""
-    if route.get("depart_dates"):
-        return list(route["depart_dates"])
+def dates_in_window(route: dict) -> set:
+    """Set of YYYY-MM-DD strings the route wants (from date_range or depart_date)."""
     rng = route.get("date_range")
     if rng:
         start, end = date.fromisoformat(rng["start"]), date.fromisoformat(rng["end"])
-        out, d = [], start
+        out, d = set(), start
         while d <= end:
-            out.append(d.isoformat())
-            d += timedelta(days=1)
+            out.add(d.isoformat()); d += timedelta(days=1)
         return out
-    return [route["depart_date"]] if route.get("depart_date") else []
+    return {route["depart_date"]} if route.get("depart_date") else set()
 
 
-def collect(cfg: dict, fetch=fetch_date, now=None):
+def collect(cfg: dict, fetch=fetch_calendar, now=None):
     now = now or datetime.now(timezone.utc)
     records, hard_failures = [], 0
     for route in cfg.get("routes", []):
         rid = route.get("id", f'{route["origin"]}-{route["destination"]}')
-        for d in route_dates(route):
-            try:
-                per_airline = fetch(route["origin"], route["destination"], d, cfg)
-            except Exception as e:
-                print(f"  ERROR {rid} {d}: {e}", file=sys.stderr)
-                hard_failures += 1
-                continue
-            if not per_airline:
-                print(f"  HARD FAIL {rid} {d}: no offers", file=sys.stderr)
-                hard_failures += 1
-                continue
-            cheapest = min(o["price"] for o in per_airline.values())
-            cur = next(iter(per_airline.values()))["currency"]
-            print(f"  {rid} {d}: {len(per_airline)} airlines, cheapest {cheapest} {cur}")
-            for info in per_airline.values():
-                records.append(airline_to_record(route, cfg, d, info, now))
+        rcfg = {**cfg, **{k: route[k] for k in ("trip",) if k in route}}
+        try:
+            calendar = fetch(route["origin"], route["destination"], rcfg)
+        except Exception as e:
+            print(f"  ERROR {rid}: {e}", file=sys.stderr)
+            hard_failures += 1
+            continue
+        window = dates_in_window(route)
+        hits = {d: info for d, info in calendar.items() if d in window}
+        if not hits:
+            print(f"  {rid}: no cached fares in the target window "
+                  f"({len(calendar)} dates available overall)", file=sys.stderr)
+        for d in sorted(hits):
+            info = hits[d]
+            print(f"  {rid} {d}: {info['price']} {cfg.get('currency','TRY')} {info['airline']} stops={info['stops']}")
+            records.append(date_to_record(route, cfg, d, info, now))
     return records, hard_failures
 
 
