@@ -13,14 +13,13 @@ data:
       "refresh": "30m",
       "templating": {
         "list": [
-          { "name": "try_per_eur", "type": "textbox", "label": "TRY per EUR", "query": "53", "current": { "text": "53", "value": "53" } },
-          { "name": "pax", "type": "textbox", "label": "Passengers", "query": "1", "current": { "text": "1", "value": "1" } }
+          { "name": "try_per_eur", "type": "textbox", "label": "TRY per EUR", "query": "53", "current": { "text": "53", "value": "53" } }
         ]
       },
       "panels": [
         {
           "type": "barchart",
-          "title": "Cheapest fare by departure day (TRY, ${pax} pax)",
+          "title": "Cheapest fare by departure day (TRY, 2 adults)",
           "gridPos": { "h": 10, "w": 24, "x": 0, "y": 0 },
           "fieldConfig": { "defaults": { "unit": "currencyTRY", "decimals": 0 } },
           "options": { "xField": "depart_date", "orientation": "vertical", "showValue": "always" },
@@ -28,20 +27,20 @@ data:
             {
               "refId": "A", "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group(columns: [\"depart_date\"]) |> min()\n  |> group()\n  |> map(fn: (r) => ({ depart_date: r.depart_date, price: float(v: r._value) * float(v: ${pax}) }))\n  |> sort(columns: [\"depart_date\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group(columns: [\"depart_date\"]) |> min()\n  |> group()\n  |> keep(columns: [\"depart_date\", \"_value\"])\n  |> rename(columns: { _value: \"price\" })\n  |> sort(columns: [\"depart_date\"])"
             }
           ]
         },
         {
           "type": "stat",
-          "title": "Cheapest fare now (TRY)",
+          "title": "Cheapest fare now (TRY, 2 adults)",
           "gridPos": { "h": 6, "w": 8, "x": 0, "y": 10 },
           "fieldConfig": { "defaults": { "unit": "currencyTRY", "decimals": 0 } },
           "targets": [
             {
               "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group() |> min()\n  |> map(fn: (r) => ({ r with _value: float(v: r._value) * float(v: ${pax}) }))"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group() |> min()"
             }
           ]
         },
@@ -54,7 +53,7 @@ data:
             {
               "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group() |> min()\n  |> map(fn: (r) => ({ r with _value: float(v: r._value) * float(v: ${pax}) / float(v: ${try_per_eur}) }))"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\", \"airline\"]) |> last()\n  |> group() |> min()\n  |> map(fn: (r) => ({ r with _value: float(v: r._value) / float(v: ${try_per_eur}) }))"
             }
           ]
         },
@@ -67,13 +66,13 @@ data:
             {
               "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"days_to_departure\")\n  |> group() |> min()"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"days_to_departure\")\n  |> group() |> min()"
             }
           ]
         },
         {
           "type": "timeseries",
-          "title": "Cheapest-fare trend by departure day (TRY, ${pax} pax)",
+          "title": "Cheapest-fare trend by departure day (TRY, 2 adults)",
           "gridPos": { "h": 10, "w": 24, "x": 0, "y": 16 },
           "fieldConfig": {
             "defaults": { "unit": "currencyTRY", "custom": { "drawStyle": "line", "showPoints": "auto", "spanNulls": true } },
@@ -84,18 +83,18 @@ data:
             {
               "refId": "A",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\"])\n  |> aggregateWindow(every: 30m, fn: min, createEmpty: false)\n  |> map(fn: (r) => ({ r with _value: float(v: r._value) * float(v: ${pax}) }))"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and r._field == \"price\")\n  |> group(columns: [\"depart_date\"])\n  |> aggregateWindow(every: 1h, fn: min, createEmpty: false)"
             }
           ]
         },
         {
           "type": "table",
-          "title": "All fares by day & airline (cheapest first, ${pax} pax)",
+          "title": "All fares by day & airline (cheapest first, 2 adults)",
           "gridPos": { "h": 14, "w": 24, "x": 0, "y": 26 },
           "fieldConfig": {
             "defaults": {},
             "overrides": [
-              { "matcher": { "id": "byName", "options": "price" }, "properties": [ { "id": "unit", "value": "currencyTRY" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Price (TRY)" } ] },
+              { "matcher": { "id": "byName", "options": "price" }, "properties": [ { "id": "unit", "value": "currencyTRY" }, { "id": "decimals", "value": 0 }, { "id": "displayName", "value": "Price (TRY, 2 adults)" } ] },
               { "matcher": { "id": "byName", "options": "booking_url" }, "properties": [ { "id": "displayName", "value": "Book" }, { "id": "links", "value": [ { "title": "Open on Google Flights", "url": "${__value.text}", "targetBlank": true } ] } ] }
             ]
           },
@@ -103,7 +102,7 @@ data:
             {
               "refId": "A", "format": "table",
               "datasource": { "type": "influxdb", "uid": "influxdb" },
-              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -6h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> last()\n  |> keep(columns: [\"depart_date\", \"airline\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with price: float(v: r.price) * float(v: ${pax}) }))\n  |> group()\n  |> sort(columns: [\"price\"])"
+              "query": "from(bucket: \"flight_prices\")\n  |> range(start: -3h)\n  |> filter(fn: (r) => r._measurement == \"flight_price\" and (r._field == \"price\" or r._field == \"stops\"))\n  |> last()\n  |> keep(columns: [\"depart_date\", \"airline\", \"booking_url\", \"_field\", \"_value\"])\n  |> pivot(rowKey: [\"depart_date\", \"airline\", \"booking_url\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> group()\n  |> sort(columns: [\"price\"])"
             }
           ]
         }

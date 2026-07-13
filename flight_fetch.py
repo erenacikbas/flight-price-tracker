@@ -99,7 +99,13 @@ def fetch_date(ctx, origin: str, destination: str, date: str, cfg: dict) -> dict
     page = ctx.new_page()
     try:
         page.goto(flights_url(origin, destination, date, cfg),
-                  wait_until="networkidle", timeout=int(cfg.get("nav_timeout_ms", 70000)))
+                  wait_until="domcontentloaded", timeout=int(cfg.get("nav_timeout_ms", 70000)))
+        # Wait for real flight results to render (every row shows a CO2e estimate),
+        # not just the page shell — this is what avoids "thin" 1-airline results.
+        try:
+            page.wait_for_selector("text=CO2e", timeout=int(cfg.get("results_timeout_ms", 30000)))
+        except Exception:
+            pass
         page.wait_for_timeout(int(cfg.get("render_wait_ms", 5000)))
         for label in ("View more flights", "more flights"):
             try:
