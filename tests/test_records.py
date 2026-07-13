@@ -4,7 +4,8 @@ from records import Record, date_airline_record, booking_url
 CFG = {"currency": "TRY"}
 ROUTE = {"id": "IST-DPS", "origin": "IST", "destination": "DPS", "trip": "one-way"}
 NOW = datetime(2026, 7, 12, 18, 0, tzinfo=timezone.utc)
-INFO = {"price": 34833, "stops": 2, "origin": "SAW", "airline": "AirAsia X, AirAsia, Jetstar"}
+INFO = {"price": 34833, "stops": 2, "origin": "SAW", "airline": "AirAsia X, AirAsia, Jetstar",
+        "logo": "https://images.kiwi.com/airlines/64x64/D7.png"}
 
 
 def test_date_airline_record():
@@ -12,6 +13,7 @@ def test_date_airline_record():
     assert isinstance(r, Record)
     assert r.tags["depart_date"] == "2026-10-26"
     assert r.tags["airline"] == "AirAsia X, AirAsia, Jetstar"
+    assert r.tags["airline_logo"] == "https://images.kiwi.com/airlines/64x64/D7.png"
     assert r.tags["origin"] == "SAW"                      # actual departure airport
     assert r.tags["currency"] == "TRY"
     assert r.tags["booking_url"] == booking_url("SAW", "DPS", "2026-10-26")

@@ -27,6 +27,9 @@ AIRLINES = {
 }
 CABINS = {"economy": "M", "premium-economy": "W", "business": "C", "first": "F"}
 
+# Kiwi's public airline-logo CDN (64x64 PNG per IATA carrier code).
+LOGO_CDN = "https://images.kiwi.com/airlines/64x64/{}.png"
+
 
 def airline_name(code: str) -> str:
     return AIRLINES.get(code, code)
@@ -34,6 +37,12 @@ def airline_name(code: str) -> str:
 
 def airlines_label(codes) -> str:
     return ", ".join(airline_name(c) for c in (codes or [])) or "Unknown"
+
+
+def airline_logo(codes) -> str:
+    """Logo URL for the itinerary's first (primary/first-leg) carrier, or '' if none."""
+    codes = codes or []
+    return LOGO_CDN.format(codes[0]) if codes else ""
 
 
 def _get(params: dict) -> dict:
@@ -91,5 +100,6 @@ def cheapest_per_date_airline(flights: list) -> dict:
         key = (dep, airline)
         if key not in out or price < out[key]["price"]:
             out[key] = {"price": price, "stops": stops,
-                        "origin": f.get("flyFrom", ""), "airline": airline}
+                        "origin": f.get("flyFrom", ""), "airline": airline,
+                        "logo": airline_logo(f.get("airlines"))}
     return out

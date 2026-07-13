@@ -32,6 +32,7 @@ def date_airline_record(route: dict, cfg: dict, depart_date: str, info: dict, no
             "destination": destination,
             "depart_date": depart_date,
             "airline": info["airline"],
+            "airline_logo": info.get("logo", ""),
             "currency": cfg.get("currency", "TRY").upper(),
             "booking_url": booking_url(origin, destination, depart_date),
         },

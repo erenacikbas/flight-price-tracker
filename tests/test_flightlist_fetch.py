@@ -1,4 +1,4 @@
-from flightlist_fetch import (airline_name, airlines_label, _ddmmyyyy,
+from flightlist_fetch import (airline_name, airlines_label, airline_logo, _ddmmyyyy,
                               cheapest_per_date_airline, search)
 
 
@@ -12,6 +12,11 @@ def test_airline_name_and_label():
     assert airline_name("ZZ") == "ZZ"
     assert airlines_label(["D7", "AK", "JQ"]) == "AirAsia X, AirAsia, Jetstar"
     assert airlines_label([]) == "Unknown"
+
+
+def test_airline_logo():
+    assert airline_logo(["D7", "AK"]) == "https://images.kiwi.com/airlines/64x64/D7.png"
+    assert airline_logo([]) == ""
 
 
 def test_ddmmyyyy():
@@ -28,6 +33,7 @@ def test_cheapest_per_date_airline_groups_and_computes_stops():
     assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["price"] == 34833
     assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["stops"] == 2
     assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["origin"] == "SAW"
+    assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["logo"] == "https://images.kiwi.com/airlines/64x64/D7.png"
     assert out[("2026-10-26", "THAI")]["origin"] == "IST"
 
 
