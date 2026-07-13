@@ -12,11 +12,11 @@ def test_date_record_tags_and_fields():
     assert isinstance(r, Record)
     assert r.measurement == "flight_price"
     assert r.tags == {"route_id": "IST-DPS", "origin": "IST", "destination": "DPS",
-                      "depart_date": "2026-10-27", "airline": "Air Arabia", "currency": "TRY"}
+                      "depart_date": "2026-10-27", "airline": "Air Arabia", "currency": "TRY",
+                      "booking_url": "https://www.aviasales.com/search/IST2710DPS1?marker=750309"}
     assert r.fields["price"] == 39249
     assert r.fields["stops"] == 2
     assert r.fields["days_to_departure"] == 107  # 2026-07-12 -> 2026-10-27
-    assert r.fields["booking_url"] == "https://www.aviasales.com/search/IST2710DPS1?marker=750309"
 
 
 def test_booking_url_format():

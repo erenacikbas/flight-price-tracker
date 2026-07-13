@@ -35,12 +35,14 @@ def date_to_record(route: dict, cfg: dict, depart_date: str, info: dict, now: da
             "depart_date": depart_date,
             "airline": info.get("airline", "Unknown"),
             "currency": cfg.get("currency", "TRY").upper(),
+            # booking_url is a stable dimension (one per date) — a tag, so it can sit
+            # alongside numeric fields in a pivot without a type collision.
+            "booking_url": booking_url(origin, destination, depart_date, marker, cfg.get("adults", 1)),
         },
         fields={
             "price": int(info["price"]),
             "stops": int(info.get("stops", 0)),
             "days_to_departure": _days_to_departure(depart_date, now),
-            "booking_url": booking_url(origin, destination, depart_date, marker, cfg.get("adults", 1)),
         },
         time=now,
     )
