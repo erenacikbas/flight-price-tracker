@@ -20,6 +20,12 @@ data:
           "date_range": { "start": "2026-08-01", "end": "2026-08-31" } },
         { "id": "ESB-DPS", "origin": "ESB", "destination": "DPS", "trip": "one-way",
           "fly_from": "city:ANK", "fly_to": "city:DPS", "max_stopovers": 4, "alert_target": 36000,
+          "date_range": { "start": "2026-10-24", "end": "2026-11-01" } },
+        { "id": "IST-BKK", "origin": "IST", "destination": "BKK", "trip": "one-way",
+          "fly_from": "city:IST", "fly_to": "city:BKK", "alert_target": 21000,
+          "date_range": { "start": "2026-10-24", "end": "2026-11-01" } },
+        { "id": "ESB-BKK", "origin": "ESB", "destination": "BKK", "trip": "one-way",
+          "fly_from": "city:ANK", "fly_to": "city:BKK", "max_stopovers": 4, "alert_target": 26000,
           "date_range": { "start": "2026-10-24", "end": "2026-11-01" } }
       ]
     }
