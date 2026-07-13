@@ -86,8 +86,14 @@ def search(route: dict, cfg: dict, get=None) -> list:
     return (get(params) or {}).get("data", [])
 
 
-def cheapest_per_date_airline(flights: list) -> dict:
-    """{(depart_date, airline_label): {price, stops, origin, airline}} keeping the cheapest."""
+def _hhmm(iso: str) -> str:
+    """'2026-10-26T11:55:00.000Z' -> '11:55'. Kiwi local_* fields are local to the airport."""
+    return iso[11:16] if iso and len(iso) >= 16 else ""
+
+
+def cheapest_per_date_airline(flights: list, currency: str = "TRY") -> dict:
+    """{(depart_date, airline_label): {price, stops, origin, airline, logo, depart_time,
+    duration_min, bag_price}} keeping the cheapest fare per group."""
     out = {}
     for f in flights:
         try:
@@ -97,9 +103,14 @@ def cheapest_per_date_airline(flights: list) -> dict:
             continue
         airline = airlines_label(f.get("airlines"))
         stops = max(len(f.get("route", [])) - 1, 0)
+        duration_min = int((f.get("duration", {}) or {}).get("total", 0) or 0) // 60
+        bag = ((f.get("bags_conversion", {}) or {}).get(currency, {}) or {}).get("1")
+        bag_price = int(round(bag)) if bag else 0
         key = (dep, airline)
         if key not in out or price < out[key]["price"]:
             out[key] = {"price": price, "stops": stops,
                         "origin": f.get("flyFrom", ""), "airline": airline,
-                        "logo": airline_logo(f.get("airlines"))}
+                        "logo": airline_logo(f.get("airlines")),
+                        "depart_time": _hhmm(f.get("local_departure", "")),
+                        "duration_min": duration_min, "bag_price": bag_price}
     return out

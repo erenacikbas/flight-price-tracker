@@ -33,6 +33,7 @@ def date_airline_record(route: dict, cfg: dict, depart_date: str, info: dict, no
             "depart_date": depart_date,
             "airline": info["airline"],
             "airline_logo": info.get("logo", ""),
+            "depart_time": info.get("depart_time", ""),
             "currency": cfg.get("currency", "TRY").upper(),
             "booking_url": booking_url(origin, destination, depart_date),
         },
@@ -40,6 +41,8 @@ def date_airline_record(route: dict, cfg: dict, depart_date: str, info: dict, no
             "price": int(info["price"]),
             "stops": int(info.get("stops", 0)),
             "days_to_departure": _days_to_departure(depart_date, now),
+            "duration_min": int(info.get("duration_min", 0)),
+            "bag_price": int(info.get("bag_price", 0)),
         },
         time=now,
     )

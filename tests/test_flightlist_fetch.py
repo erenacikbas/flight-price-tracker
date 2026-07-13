@@ -4,7 +4,8 @@ from flightlist_fetch import (airline_name, airlines_label, airline_logo, _ddmmy
 
 def _flight(dep, price, airlines, legs, flyfrom="SAW"):
     return {"local_departure": dep + "T06:05:00.000Z", "price": price,
-            "airlines": airlines, "route": [{}] * legs, "flyFrom": flyfrom, "flyTo": "DPS"}
+            "airlines": airlines, "route": [{}] * legs, "flyFrom": flyfrom, "flyTo": "DPS",
+            "duration": {"total": 79200}, "bags_conversion": {"TRY": {"1": 6283.9}}}
 
 
 def test_airline_name_and_label():
@@ -34,6 +35,9 @@ def test_cheapest_per_date_airline_groups_and_computes_stops():
     assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["stops"] == 2
     assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["origin"] == "SAW"
     assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["logo"] == "https://images.kiwi.com/airlines/64x64/D7.png"
+    assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["depart_time"] == "06:05"
+    assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["duration_min"] == 1320   # 79200s
+    assert out[("2026-10-26", "AirAsia X, AirAsia, Jetstar")]["bag_price"] == 6284       # round(6283.9)
     assert out[("2026-10-26", "THAI")]["origin"] == "IST"
 
 

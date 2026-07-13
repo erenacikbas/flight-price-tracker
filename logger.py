@@ -60,7 +60,8 @@ def main() -> int:
     from flightlist_fetch import search, cheapest_per_date_airline
     cfg = load_config()
     records, attempted, succeeded = collect(
-        cfg, fetch=lambda route: cheapest_per_date_airline(search(route, cfg)))
+        cfg, fetch=lambda route: cheapest_per_date_airline(
+            search(route, cfg), currency=cfg.get("currency", "TRY")))
     written = write_records(records, influx_config_from_env())
     print(f"Wrote {written} point(s); {succeeded}/{attempted} routes succeeded.")
     return 2 if attempted and succeeded == 0 else 0
