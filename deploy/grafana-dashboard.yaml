@@ -32,7 +32,7 @@ data:
         {
           "type": "barchart",
           "title": "${route} — cheapest fare by departure day (TRY, 2 adults)",
-          "gridPos": { "h": 10, "w": 24, "x": 0, "y": 0 },
+          "gridPos": { "h": 10, "w": 24, "x": 0, "y": 6 },
           "fieldConfig": { "defaults": { "unit": "suffix: ₺", "decimals": 0 } },
           "options": { "xField": "day", "orientation": "auto", "showValue": "auto", "xTickLabelRotation": -45, "xTickLabelSpacing": 100 },
           "targets": [
@@ -46,8 +46,9 @@ data:
         {
           "type": "stat",
           "title": "Cheapest fare now (TRY, 2 adults)",
-          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 10 },
+          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
           "fieldConfig": { "defaults": { "unit": "suffix: ₺", "decimals": 0 } },
+          "options": { "textMode": "value", "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
           "targets": [
             {
               "refId": "A",
@@ -59,8 +60,9 @@ data:
         {
           "type": "stat",
           "title": "Cheapest now (EUR @ ${try_per_eur})",
-          "gridPos": { "h": 6, "w": 8, "x": 8, "y": 10 },
+          "gridPos": { "h": 6, "w": 8, "x": 8, "y": 0 },
           "fieldConfig": { "defaults": { "unit": "prefix: €", "decimals": 0 } },
+          "options": { "textMode": "value", "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
           "targets": [
             {
               "refId": "A",
@@ -72,8 +74,9 @@ data:
         {
           "type": "stat",
           "title": "Days to departure (nearest tracked)",
-          "gridPos": { "h": 6, "w": 8, "x": 16, "y": 10 },
+          "gridPos": { "h": 6, "w": 8, "x": 16, "y": 0 },
           "fieldConfig": { "defaults": { "unit": "short" } },
+          "options": { "textMode": "value", "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false } },
           "targets": [
             {
               "refId": "A",
