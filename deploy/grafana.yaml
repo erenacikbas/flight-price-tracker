@@ -53,7 +53,9 @@ spec:
         - name: dashboards
           configMap:
             name: grafana-dashboard-flights
-            items: [{ key: flights.json, path: flights.json }]
+            items:
+              - { key: flights.json, path: flights.json }
+              - { key: overview.json, path: overview.json }
 ---
 apiVersion: v1
 kind: Service
